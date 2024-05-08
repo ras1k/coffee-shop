@@ -1,0 +1,70 @@
+const positionListData = [
+  {
+    job_id: 1,
+    job_title: "Cleaner",
+    reports_to: "Incharge",
+    no_of_positions: "8",
+    positions_occupied: "2",
+    vacancies_available: "6",
+    salary_type: "Weekly",
+    salary_amount: "200",
+  },
+  {
+    job_id: 2,
+    job_title: "Cashier",
+    reports_to: "Incharge",
+    no_of_positions: "8",
+    positions_occupied: "2",
+    vacancies_available: "6",
+    salary_type: "Weekly",
+    salary_amount: "200",
+  },
+  {
+    job_id: 3,
+    job_title: "Intern",
+    reports_to: "Incharge",
+    no_of_positions: "8",
+    positions_occupied: "2",
+    vacancies_available: "6",
+    salary_type: "Weekly",
+    salary_amount: "200",
+  },
+];
+
+const jobListData = [
+  {
+    job_id: 1,
+    job_title: "Cleaner",
+    reports_to: "Incharge",
+    job_description: "hasdfklj",
+    key_competencies: "2",
+    qualifications: "6",
+    about_us: "Weekly",
+    benefits: "200",
+    isPosted: true,
+  },
+  {
+    job_id: 2,
+    job_title: "Cashier",
+    reports_to: "Incharge",
+    job_description: "8",
+    key_competencies: "2",
+    qualifications: "6",
+    about_us: "Weekly",
+    benefits: "200",
+    isPosted: true,
+  },
+  {
+    job_id: 3,
+    job_title: "Intern",
+    reports_to: "Incharge",
+    job_description: "8",
+    key_competencies: "2",
+    qualifications: "6",
+    about_us: "Weekly",
+    benefits: "200",
+    isPosted: false,
+  },
+];
+
+export { positionListData, jobListData };

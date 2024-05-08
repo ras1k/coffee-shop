@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @import url("https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap"); */
+
+.logoStyle {
+  font-family: "Comic Neue" !important;
+  font-weight: 600;
+  font-style: italic;
+  /* text-shadow: rgba(228, 205, 114, 0.979) 1px 0 10px; */
+  text-shadow: 2px 2px;
+  @apply text-3xl;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ffe75d;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ffd900;
+}
+
+.minor-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.minor-scrollbar::-webkit-scrollbar-thumb {
+  background: #0084ff;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.minor-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #0059ff;
+}
+.minor-scrollbar::-webkit-scrollbar-track {
+  background: #e7e7e7;
+  border-radius: 10px;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+
+@layer components {
+  .btn {
+    @apply text-center rounded-full bg-[#6F4E37] hover:bg-black transition ease-out hover:scale-95 font-semibold text-white;
+  }
+
+}

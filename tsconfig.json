@@ -1,0 +1,10 @@
+{
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "tailwind.config.ts",
+    "nuxt.config.ts"
+  ],
+  "extends": "./.nuxt/tsconfig.json"
+}

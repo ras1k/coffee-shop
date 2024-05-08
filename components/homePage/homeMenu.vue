@@ -1,0 +1,498 @@
+<script setup>
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+
+import { menuData } from "/stores/dummyMenuData.js";
+// const getProducts = async() => {
+//   const data = $fetch('api/products')
+//   console.log(data)
+// }
+// const postProducts = async() => {
+//   const postdata = $fetch('api/products', {
+//     method: 'post',
+//     data:{asss}
+//   })
+//   console.log(data)
+// }
+// onMounted(() => {
+//   getProducts()
+// })
+const menu = menuData;
+const modules = [Autoplay];
+const breakpoints = ref({
+  320: {
+    slidesPerView: 1,
+    spaceBetween: 10,
+  },
+  639: {
+    slidesPerView: 1,
+    spaceBetween: 10,
+  },
+  901: {
+    slidesPerView: 1,
+    spaceBetween: 10,
+  },
+  1300: {
+    slidesPerView: 1,
+    spaceBetween: 10,
+  },
+  1500: {
+    slidesPerView: 1,
+    spaceBetween: 10,
+  },
+});
+import img1 from "/assets/img/coffeebag/1.jpg";
+import img2 from "/assets/img/coffeebag/2.jpg";
+import img3 from "/assets/img/coffeebag/3.webp";
+import img4 from "/assets/img/coffeebag/4.jpeg";
+import img5 from "/assets/img/coffeebag/5.jpg";
+import img6 from "/assets/img/coffeebag/6.avif";
+import img7 from "/assets/img/coffeebag/7.jpg";
+import img8 from "/assets/img/coffeebag/8.jpg";
+import img9 from "/assets/img/coffeebag/9.jpg";
+import img10 from "/assets/img/coffeebag/arabiandark.png";
+import img11 from "/assets/img/coffeebag/arabianexpresso.png";
+import img12 from "/assets/img/coffeebag/qishr.png";
+import img13 from "/assets/img/coffeebag/saudiblend.png";
+import img14 from "/assets/img/coffeebag/affogato.png";
+import img15 from "/assets/img/coffeebag/americano.png";
+import img16 from "/assets/img/coffeebag/frappe.png";
+import img17 from "/assets/img/coffeebag/latte.png";
+import img18 from "/assets/img/coffeebag/Café au Lait.png";
+import img19 from "/assets/img/coffeebag/Café Crema@0.3x.jpg";
+import img20 from "/assets/img/coffeebag/Kleiner Schwarzer.jpg";
+import img21 from "/assets/img/coffeebag/Leche y Leche.jpg";
+import img22 from "/assets/img/coffeebag/Zapekanka.jpg";
+import img23 from "/assets/img/coffeebag/Indonesian Kopi Luwak@0.3x.jpg";
+import img24 from "/assets/img/coffeebag/Korean Dalgona Coffee@0.5x.jpg";
+import img25 from "/assets/img/coffeebag/Sri Lankan Milk Coffee.png.jpg";
+import img26 from "/assets/img/coffeebag/Thai Iced Coffee-1.png";
+
+const arabica = ref([
+  {
+    id: 1,
+    name: "Saudi Blend - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 700,
+    image: img13,
+  },
+  {
+    id: 2,
+    name: "Arabian Espresso - 10 LB",
+    description: "Redeem this reward for a free coffee of your choice.",
+    points: 500,
+    image: img11,
+  },
+  {
+    id: 3,
+    name: "Qishr/Husks Roasted Beans - 7 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 600,
+    image: img12,
+  },
+  {
+    id: 4,
+    name: "Arabica Decaf - 9 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img11,
+  },
+  {
+    id: 5,
+    name: "Arabian Dark Beans - 9 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img10,
+  },
+]);
+const america = ref([
+  {
+    id: 4,
+    name: "Americano - 9 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img15,
+  },
+  {
+    id: 5,
+    name: "Affogato - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img14,
+  },
+  {
+    id: 6,
+    name: "Caffè Latte - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img17,
+  },
+  {
+    id: 6,
+    name: "Mocha - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img14,
+  },
+  {
+    id: 7,
+    name: "Frappé - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img16,
+  },
+]);
+
+const europa = ref([
+  {
+    id: 4,
+    name: "Leche y Leche (Spanish) - 9 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img21,
+  },
+  {
+    id: 5,
+    name: "Kleiner Schwarzer - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img20,
+  },
+  {
+    id: 6,
+    name: "Café Crema - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img19,
+  },
+  {
+    id: 6,
+    name: "Zapekanka - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img22,
+  },
+  {
+    id: 1,
+    name: "Café au Lait - 10 LB",
+    description: "Redeem this reward for a free coffee of your choice.",
+    points: 500,
+    image: img18,
+  },
+]);
+const asia = ref([
+  {
+    id: 7,
+    name: "Korean Dalgona Coffee - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img24,
+  },
+  {
+    id: 8,
+    name: "Sri Lankan Milk Coffee - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img25,
+  },
+  {
+    id: 9,
+    name: "Indonesian Kopi Luwak - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img23,
+  },
+  {
+    id: 9,
+    name: "Laotian Lao Coffee - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img7,
+  },
+  {
+    id: 4,
+    name: "Thai Iced Coffee - 9 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img26,
+  },
+]);
+
+
+
+const africa = ref([
+  {
+    id: 1,
+    name: "Ethiopian Yirgacheffe - 10 LB",
+    description: "Redeem this reward for a free coffee of your choice.",
+    points: 500,
+    image: img1,
+  },
+  {
+    id: 2,
+    name: "Kenyan AA - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 700,
+    image: img2,
+  },
+  {
+    id: 3,
+    name: "Tanzanian Peaberry - 7 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 600,
+    image: img3,
+  },
+  {
+    id: 3,
+    name: "Jamaican Blue Mountain - 7 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 600,
+    image: img1,
+  },
+  {
+    id: 6,
+    name: "Robusta Kiandu - 10 LB",
+    description: "Get a discount on any merchandise purchase.",
+    points: 1000,
+    image: img6,
+  },
+]);
+</script>
+<template>
+  <div class="py-10">
+    <div class="w-full flex items-center justify-center flex-col">
+      <!-- <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">Our Products</h1> -->
+      <!-- <nuxt-link
+      to="/products"
+      class="px-10 py-2 rounded-full bg-gradient-to-r from-pink-500 to-[#6F4E37] hover:from-green-400 hover:to-blue-500 font-semibold text-white"
+    >
+      View Products
+    </nuxt-link> -->
+    </div>
+
+    <div class="w-full px-[13%]">
+      <swiper
+        :slides-per-view="1"
+        :breakpoints="breakpoints"
+        :space-between="10"
+        :loop="true"
+        @slideChange="onSlideChange"
+        :modules="modules"
+        :autoplay="{
+          delay: 3000,
+          disableOnInteraction: true,
+        }"
+        :pagination="{
+          clickable: true,
+        }"
+        class="mySwiper"
+      >
+        <swiper-slide>
+          <div>
+            <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
+              CoffeeX Arabica
+            </h1>
+          </div>
+          <div class="flex gap-5 w-full justify-between">
+            <div v-for="item in arabica">
+              <div class="rounded-xl bg-white drop-shadow-md">
+                <div class="h-[200px] overflow-hidden rounded-t-xl w-[250px]">
+                  <img :src="item.image" alt="" class="object-fit" />
+                </div>
+                <div
+                  class="p-2 h-[125px] max-w-[250px] flex flex-col justify-between"
+                >
+                  <h1 class="text-lg md:text-xl font-bold py-2 text-black">
+                    {{ item.name }}
+                  </h1>
+                  <nuxt-link
+                    :to="{ path: '/products', query: { menu: item.slug } }"
+                    class="bg-[#6F4E37] text-white px-5 py-1.5 rounded-xl w-full"
+                  >
+                    See All
+                  </nuxt-link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+        <swiper-slide class="">
+          <div>
+            <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
+              CoffeeX America
+            </h1>
+          </div>
+          <div class="flex gap-5 w-full justify-between">
+            <div
+              v-for="item in america"
+              class="rounded-xl bg-white drop-shadow-md"
+            >
+              <div class="h-[200px] overflow-hidden rounded-t-xl w-[250px]">
+                <img :src="item.image" alt="" class="object-fit" />
+              </div>
+              <div
+                class="p-2 h-[125px] max-w-[250px] flex flex-col justify-between"
+              >
+                <h1 class="text-lg md:text-xl font-bold py-2 text-black">
+                  {{ item.name }}
+                </h1>
+                <nuxt-link
+                  :to="{ path: '/products', query: { menu: item.slug } }"
+                  class="bg-[#6F4E37] text-white px-5 py-1.5 rounded-xl w-full"
+                >
+                  See All
+                </nuxt-link>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div>
+            <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
+              CoffeeX Asia
+            </h1>
+          </div>
+          <div class="flex gap-5 w-full justify-between">
+            <div
+              v-for="item in asia"
+              class="rounded-xl bg-white drop-shadow-md"
+            >
+              <div class="h-[200px] overflow-hidden rounded-t-xl w-[250px]">
+                <img :src="item.image" alt="" class="object-fit" />
+              </div>
+              <div
+                class="p-2 h-[125px] max-w-[250px] flex flex-col justify-between"
+              >
+                <h1 class="text-lg md:text-xl font-bold py-2 text-black">
+                  {{ item.name }}
+                </h1>
+                <nuxt-link
+                  :to="{ path: '/products', query: { menu: item.slug } }"
+                  class="bg-[#6F4E37] text-white px-5 py-1.5 rounded-xl w-full"
+                >
+                  See All
+                </nuxt-link>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div>
+            <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
+              CoffeeX Europa
+            </h1>
+          </div>
+          <div class="flex gap-5 w-full justify-between">
+            <div
+              v-for="item in europa"
+              class="rounded-xl bg-white drop-shadow-md"
+            >
+              <div class="h-[200px] overflow-hidden rounded-t-xl w-[250px]">
+                <img :src="item.image" alt="" class="object-fit" />
+              </div>
+              <div
+                class="p-2 h-[125px] max-w-[250px] flex flex-col justify-between"
+              >
+                <h1 class="text-lg md:text-xl font-bold py-2 text-black">
+                  {{ item.name }}
+                </h1>
+                <nuxt-link
+                  :to="{ path: '/products', query: { menu: item.slug } }"
+                  class="bg-[#6F4E37] text-white px-5 py-1.5 rounded-xl w-full"
+                >
+                  See All
+                </nuxt-link>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+        <swiper-slide>
+          <div>
+            <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
+              CoffeeX Asia
+            </h1>
+          </div>
+          <div class="flex gap-5 w-full justify-between">
+            <div
+              v-for="item in asia"
+              class="rounded-xl bg-white drop-shadow-md"
+            >
+              <div class="h-[200px] overflow-hidden rounded-t-xl w-[250px]">
+                <img :src="item.image" alt="" class="object-fit" />
+              </div>
+              <div
+                class="p-2 h-[125px] max-w-[250px] flex flex-col justify-between"
+              >
+                <h1 class="text-xl font-bold py-2 text-black">
+                  {{ item.name }}
+                </h1>
+                <nuxt-link
+                  :to="{ path: '/products', query: { menu: item.slug } }"
+                  class="bg-[#6F4E37] text-white px-5 py-1.5 rounded-xl w-full"
+                >
+                  See All
+                </nuxt-link>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+        
+        <swiper-slide class="">
+          <div>
+            <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
+              CoffeeX Africa
+            </h1>
+          </div>
+          <div class="flex gap-5 w-full justify-between">
+            <div
+              v-for="item in africa"
+              class="rounded-xl bg-white drop-shadow-md"
+            >
+              <div class="h-[200px] overflow-hidden rounded-t-xl w-[250px]">
+                <img :src="item.image" alt="" class="object-fit" />
+              </div>
+              <div
+                class="p-2 h-[125px] max-w-[250px] flex flex-col justify-between"
+              >
+                <h1 class="text-lg md:text-xl font-bold py-2 text-black">
+                  {{ item.name }}
+                </h1>
+                <nuxt-link
+                  :to="{ path: '/products', query: { menu: item.slug } }"
+                  class="bg-[#6F4E37] btn px-5 py-1.5 "
+                >
+                  See All
+                </nuxt-link>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper>
+    </div>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>
