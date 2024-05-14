@@ -11,6 +11,7 @@ import video from '/assets/img/video/africa_premium.mp4'
 
 const modules = [Autoplay]
 </script>
+
 <template>
   <div class="">
     <swiper
