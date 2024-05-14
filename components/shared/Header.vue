@@ -2,7 +2,7 @@
 const currentPage = ref("Home");
 const route = useRoute();
 const router = useRouter();
-
+const store = useProductsStore()
 const showNavbar = ref(false);
 const currentScrollPosition = ref(0);
 
@@ -17,6 +17,22 @@ const logoutUser = () => {
   loginCookie.value = "";
   tokenCookie.value = "";
 };
+
+const { setRouterHistory } = useHeaderStore()
+const nuxtApp = useNuxtApp()
+const placeOrder = () => {
+  if (loginCookie.value && loginCookie.value.email) {
+    router.push('/checkout')
+  } else {
+    setRouterHistory('/checkout')
+    nuxtApp.$toast('clear')
+    nuxtApp.$toast('success', {
+      message: 'Please login first!',
+      className: 'alert_error',
+    })
+    router.push('/login/user-dashboard')
+  }
+}
 
 onMounted(() => {
   window.addEventListener("scroll", myFunction);
@@ -249,7 +265,6 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        
 
         <div class="flex items-center font-bold gap-5">
           <div
@@ -287,9 +302,11 @@ onMounted(() => {
               >
             </div>
           </div>
+
           <div v-else class="cursor-pointer">
             <p @click="logoutUser()">Log Out</p>
           </div>
+          
           <!-- <div class="font-bold flex gap-1 items-center relative group">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -324,6 +341,20 @@ onMounted(() => {
             </svg>
           </div>
         </div>
+
+        <div @click="placeOrder()" class="flex items-center bg-white p-1 rounded-lg cursor-pointer font-bold gap-5">
+          <div
+          
+            class="relative"
+          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            
+             <div v-if="store.cart.length" class="absolute top-5 left-5 text-center flex items-center justify-center text-white p-1 bg-amber-900  rounded-full text-sm h-5 w-5">
+               {{ store.cart.length }}
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

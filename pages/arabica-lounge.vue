@@ -2,12 +2,11 @@
 import arabica from "@/assets/img/exterior/2.jpg"
 import arabica2 from "@/assets/img/exterior/4.jpg"
 import arabica3 from "@/assets/img/exterior/5.jpg"
-import arabica4 from "@/assets/img/exterior/6.jpg"
 import arabica_video from "@/assets/img/video/arabica_lounge.mp4"
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
+import "swiper/css"
+import "swiper/css/navigation"
+import { Autoplay } from "swiper/modules"
+import { Swiper, SwiperSlide } from "swiper/vue"
 
 const modules = [Autoplay];
 
@@ -18,7 +17,7 @@ const modules = [Autoplay];
       :slides-per-view="1"
       :space-between="10"
       :loop="true"
-      @slideChange="onSlideChange"
+       
       :autoplay="{
         delay: 4000,
         disableOnInteraction: true,

@@ -48,7 +48,7 @@ const { marketingOffer, marketingPromo } = storeToRefs(
       />
     </div>
 
-    <div class="min-h-screen relative">
+    <div class="min-h-screen mt-20">
       <slot />
       <div
         v-if="route.name.includes('shops') || route.name.includes('carts')"
@@ -79,11 +79,11 @@ const { marketingOffer, marketingPromo } = storeToRefs(
         </tbody>
       </div>
 
-      <div
+      <!-- <div
         v-if="route.name === 'index'"
         class="bg-white text-black w-fit rounded boxShadow p-2 fixed z-30 bottom-10 right-10"
       >
-        <NuxtLink to="/shops">
+        <NuxtLink to="/">
           <table>
             <thead>
               <tr class="bg-gray-400 text-sm w-full">
@@ -105,7 +105,7 @@ const { marketingOffer, marketingPromo } = storeToRefs(
             </tr>
           </tbody>
         </NuxtLink>
-      </div>
+      </div> -->
     </div>
 
     <SharedFooter />

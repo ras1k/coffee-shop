@@ -1,13 +1,8 @@
 <script setup>
-import arabica from "/assets/img/location/arabica.jpg";
-import america from "/assets/img/location/america.jpg";
-import africa from "/assets/img/location/africa.jpg";
-import asia from "/assets/img/location/asia.jpg";
-import europa from "/assets/img/location/europa.jpg";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/vue";
 import premium1 from "/assets/img/exterior/CoffeeX-america-premium/1.png";
 import premium2 from "/assets/img/exterior/CoffeeX-america-premium/Coffee_X-02.png";
 import premium3 from "/assets/img/exterior/CoffeeX-america-premium/Coffee_X-03.png";
@@ -21,7 +16,7 @@ const modules = [Autoplay];
     :slides-per-view="1"
     :space-between="10"
     :loop="true"
-    @slideChange="onSlideChange"
+     
     :autoplay="{
       delay: 4000,
       disableOnInteraction: true,

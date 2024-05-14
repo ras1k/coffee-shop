@@ -3,12 +3,12 @@ import arabica from "/assets/img/exterior/CoffeeX_Arabica_Express_01.jpg"
 import arabica1 from "/assets/img/exterior/CoffeeX_Arabica_Express_02.jpg"
 import arabica2 from "/assets/img/exterior/CoffeeX_Arabica_Express_03.jpg"
 import arabica3 from "/assets/img/exterior/CoffeeX_Arabica_Express_04.jpg"
-import arabica4 from "/assets/img/exterior/CoffeeX_Arabica_Express_05.jpg"
+import video from "/assets/img/video/arabica_express.mp4"
 
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
+import "swiper/css"
+import "swiper/css/navigation"
+import { Autoplay } from "swiper/modules"
+import { Swiper, SwiperSlide } from "swiper/vue"
 
 const modules = [Autoplay];
 
@@ -19,7 +19,7 @@ const modules = [Autoplay];
       :slides-per-view="1"
       :space-between="10"
       :loop="true"
-      @slideChange="onSlideChange"
+       
       :autoplay="{
         delay: 4000,
         disableOnInteraction: true,
@@ -80,7 +80,15 @@ const modules = [Autoplay];
           </div>
         </div>
       </swiper-slide>
-
+      <swiper-slide class="">
+        <div class="h-[70vh] w-full relative">
+          <video autoplay controls loop class="h-[100%] w-full border" >
+            <source :src="video" type="video/mp4">
+          </video>
+      
+        </div>
+      </swiper-slide>
+    </swiper>
         <div class="container py-6 text-lg">
           <p class="text-3xl font-semibold py-3">CoffeeX Arabica Express</p>
           <p>
@@ -148,7 +156,7 @@ const modules = [Autoplay];
           <p>{{ item.description }}</p>
         </div>
       </swiper-slide> -->
-    </swiper>
+   
   </div>
 </template>
 

@@ -1,18 +1,18 @@
 <script setup>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay } from "swiper/modules";
-const modules = [Autoplay];
+import { Autoplay } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+const modules = [Autoplay]
 
-import location1 from "@/assets/img/interior/1.jpg";
+import location1 from '@/assets/img/interior/1.jpg'
 
-import location3 from "@/assets/img/interior/3.jpg";
+import location3 from '@/assets/img/interior/3.jpg'
 
-import premium from "/assets/img/exterior/CoffeeX-america-premium/Coffee_X-03.png";
-import lounge from "/assets/img/exterior/CoffeeX-america-lounge/Coffee_X_-07.png";
+import lounge from '/assets/img/exterior/CoffeeX-america-lounge/Coffee_X_-07.png'
+import premium from '/assets/img/exterior/CoffeeX-america-premium/Coffee_X-03.png'
 
-import arabica2 from "@/assets/img/exterior/6.jpg"
+import arabica2 from '@/assets/img/exterior/6.jpg'
 
-import express3 from "/assets/img/exterior/America_Express/EXPRESS-32.png";
+import express3 from '/assets/img/exterior/America_Express/EXPRESS-32.png'
 // import arabica3 from "@/assets/img/exterior/premium/premium2.png"
 </script>
 <template>
@@ -48,10 +48,7 @@ import express3 from "/assets/img/exterior/America_Express/EXPRESS-32.png";
             delight your customers.
           </li>
         </ul>
-        <nuxt-link
-          to="/open-location"
-          class="md:px-10 md:w-1/2 py-2 btn"
-        >
+        <nuxt-link to="/open-location" class="md:px-10 md:w-1/2 py-2 btn">
           Learn More
         </nuxt-link>
       </div>
@@ -60,7 +57,6 @@ import express3 from "/assets/img/exterior/America_Express/EXPRESS-32.png";
           :slides-per-view="1"
           :space-between="10"
           :loop="true"
-          @slideChange="onSlideChange"
           :modules="modules"
           :autoplay="{
             delay: 3000,

@@ -1,56 +1,55 @@
 <script setup>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
+import 'swiper/css'
+import 'swiper/css/navigation'
+import { Autoplay, Navigation, Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
 
-import { Plus, Minus, Star } from "lucide-vue-next";
+import { onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { menuData } from '/stores/dummyMenuData.js'
 
-import { menuData } from "/stores/dummyMenuData.js";
-import { onMounted } from "vue";
-import { useRoute } from "vue-router";
+const modules = [Autoplay, Pagination, Navigation]
 
-const modules = [Autoplay, Pagination, Navigation];
+const menu = menuData
 
-const menu = menuData;
-
-const selectedMenu = ref("");
+const selectedMenu = ref('')
 const menuSelect = (id) => {
   // const filteredItems = menu.filter((item) => item.id == id);
   // selectedMenu.value = filteredItems[0];
   // console.log(selectedMenu.value);
-  selectedMenu.value = menu.find((item) => item.id == id);
-};
+  selectedMenu.value = menu.find((item) => item.id == id)
+}
 
-const route = useRoute();
+const route = useRoute()
 
 const allMenu = () => {
-  selectedMenu.value = "";
-};
+  selectedMenu.value = ''
+}
 
-const store = useProductStore();
-
+const store = useProductStore()
 
 const removeCart = () => {
-    store.cart.length --
+  store.cart.length--
 }
 
 const currentSelectedMenuItem = ref('')
 
-watch(() => selectedMenu.value.item, () => {
-  currentSelectedMenuItem.value = ''
-  setTimeout(() =>{
-    currentSelectedMenuItem.value =  selectedMenu.value.item
-  },100)
-  console.log(selectedMenu.value.item, 'from watch')
-})
-
+watch(
+  () => selectedMenu.value.item,
+  () => {
+    currentSelectedMenuItem.value = ''
+    setTimeout(() => {
+      currentSelectedMenuItem.value = selectedMenu.value.item
+    }, 100)
+    console.log(selectedMenu.value.item, 'from watch')
+  }
+)
 
 onMounted(async () => {
   if (route.query.menu) {
-    selectedMenu.value = menu.find((e) => e.slug == route.query.menu);
+    selectedMenu.value = menu.find((e) => e.slug == route.query.menu)
   }
-});
+})
 </script>
 
 <template>
@@ -62,7 +61,6 @@ onMounted(async () => {
             :slides-per-view="3.5"
             :space-between="10"
             :loop="true"
-            @slideChange="onSlideChange"
             :pagination="{ clickable: true }"
             :modules="modules"
             class="rounded-full"
@@ -106,14 +104,14 @@ onMounted(async () => {
         </div>
         <div class="grid lg:grid-cols-3 2xl:grid-cols-4 gap-5">
           <div v-for="i in currentSelectedMenuItem">
-            <Product :product="i"/>
+            <Product :product="i" />
           </div>
         </div>
       </div>
     </div>
 
     <div class="w-1/4">
-      <div class=" sticky top-[80px] z-10  py-5">
+      <div class="sticky top-[80px] z-10 py-5">
         <!-- <div class="bg-white rounded-xl drop-shadow-md p-3 mb-3">
           <div class="py-1.5 text-sm">Change Branch</div>
           <Select>
@@ -177,7 +175,7 @@ onMounted(async () => {
         <div class="bg-white rounded-xl drop-shadow-md p-3 mb-3">
           <h1 class="text-xl font-semibold pb-2 border-b">Your Order</h1>
           <div
-          v-for="item in store.cart"
+            v-for="item in store.cart"
             class="py-2 flex justify-between gap-2 text-sm font-semibold border-b"
           >
             <p>{{ item.quantity }} x {{ item.name }}</p>
@@ -195,7 +193,10 @@ onMounted(async () => {
                     <path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path>
                   </svg>
                 </div>
-                <div v-if="item.quantity>1" @click="store.decresecart(item.id)">
+                <div
+                  v-if="item.quantity > 1"
+                  @click="store.decresecart(item.id)"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"

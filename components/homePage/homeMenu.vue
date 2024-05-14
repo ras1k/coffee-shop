@@ -1,10 +1,33 @@
 <script setup>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
+import 'swiper/css'
+import 'swiper/css/navigation'
+import { Autoplay } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
 
-import { menuData } from "/stores/dummyMenuData.js";
+import img1 from '/assets/img/coffeebag/1.jpg'
+import img3 from '/assets/img/coffeebag/3.webp'
+import img7 from '/assets/img/coffeebag/7.jpg'
+import img19 from '/assets/img/coffeebag/Café Crema@0.3x.jpg'
+import img18 from '/assets/img/coffeebag/Café au Lait.png'
+import img29 from '/assets/img/coffeebag/Ethiopian Yirgacheffe.jpg'
+import img23 from '/assets/img/coffeebag/Indonesian Kopi Luwak@0.3x.jpg'
+import img28 from '/assets/img/coffeebag/Kenyan AA@0.33x.jpg'
+import img20 from '/assets/img/coffeebag/Kleiner Schwarzer.jpg'
+import img24 from '/assets/img/coffeebag/Korean Dalgona Coffee@0.5x.jpg'
+import img21 from '/assets/img/coffeebag/Leche y Leche.jpg'
+import img27 from '/assets/img/coffeebag/Robusta Kiandu@0.5x.jpg'
+import img25 from '/assets/img/coffeebag/Sri Lankan Milk Coffee.png.jpg'
+import img26 from '/assets/img/coffeebag/Thai Iced Coffee-1.png'
+import img22 from '/assets/img/coffeebag/Zapekanka.jpg'
+import img14 from '/assets/img/coffeebag/affogato.png'
+import img15 from '/assets/img/coffeebag/americano.png'
+import img10 from '/assets/img/coffeebag/arabiandark.png'
+import img11 from '/assets/img/coffeebag/arabianexpresso.png'
+import img16 from '/assets/img/coffeebag/frappe.png'
+import img17 from '/assets/img/coffeebag/latte.png'
+import img12 from '/assets/img/coffeebag/qishr.png'
+import img13 from '/assets/img/coffeebag/saudiblend.png'
+import { menuData } from '/stores/dummyMenuData.js'
 // const getProducts = async() => {
 //   const data = $fetch('api/products')
 //   console.log(data)
@@ -19,8 +42,8 @@ import { menuData } from "/stores/dummyMenuData.js";
 // onMounted(() => {
 //   getProducts()
 // })
-const menu = menuData;
-const modules = [Autoplay];
+const menu = menuData
+const modules = [Autoplay]
 const breakpoints = ref({
   320: {
     slidesPerView: 1,
@@ -42,223 +65,195 @@ const breakpoints = ref({
     slidesPerView: 1,
     spaceBetween: 10,
   },
-});
-import img1 from "/assets/img/coffeebag/1.jpg";
-import img2 from "/assets/img/coffeebag/2.jpg";
-import img3 from "/assets/img/coffeebag/3.webp";
-import img4 from "/assets/img/coffeebag/4.jpeg";
-import img5 from "/assets/img/coffeebag/5.jpg";
-import img6 from "/assets/img/coffeebag/6.avif";
-import img7 from "/assets/img/coffeebag/7.jpg";
-import img8 from "/assets/img/coffeebag/8.jpg";
-import img9 from "/assets/img/coffeebag/9.jpg";
-import img10 from "/assets/img/coffeebag/arabiandark.png";
-import img11 from "/assets/img/coffeebag/arabianexpresso.png";
-import img12 from "/assets/img/coffeebag/qishr.png";
-import img13 from "/assets/img/coffeebag/saudiblend.png";
-import img14 from "/assets/img/coffeebag/affogato.png";
-import img15 from "/assets/img/coffeebag/americano.png";
-import img16 from "/assets/img/coffeebag/frappe.png";
-import img17 from "/assets/img/coffeebag/latte.png";
-import img18 from "/assets/img/coffeebag/Café au Lait.png";
-import img19 from "/assets/img/coffeebag/Café Crema@0.3x.jpg";
-import img20 from "/assets/img/coffeebag/Kleiner Schwarzer.jpg";
-import img21 from "/assets/img/coffeebag/Leche y Leche.jpg";
-import img22 from "/assets/img/coffeebag/Zapekanka.jpg";
-import img23 from "/assets/img/coffeebag/Indonesian Kopi Luwak@0.3x.jpg";
-import img24 from "/assets/img/coffeebag/Korean Dalgona Coffee@0.5x.jpg";
-import img25 from "/assets/img/coffeebag/Sri Lankan Milk Coffee.png.jpg";
-import img26 from "/assets/img/coffeebag/Thai Iced Coffee-1.png";
+})
 
 const arabica = ref([
   {
     id: 1,
-    name: "Saudi Blend - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Saudi Blend - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 700,
     image: img13,
   },
   {
     id: 2,
-    name: "Arabian Espresso - 10 LB",
-    description: "Redeem this reward for a free coffee of your choice.",
+    name: 'Arabian Espresso - 10 LB',
+    description: 'Redeem this reward for a free coffee of your choice.',
     points: 500,
     image: img11,
   },
   {
     id: 3,
-    name: "Qishr/Husks Roasted Beans - 7 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Qishr/Husks Roasted Beans - 7 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 600,
     image: img12,
   },
   {
     id: 4,
-    name: "Arabica Decaf - 9 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Arabica Decaf - 9 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img11,
   },
   {
     id: 5,
-    name: "Arabian Dark Beans - 9 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Arabian Dark Beans - 9 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img10,
   },
-]);
+])
 const america = ref([
   {
     id: 4,
-    name: "Americano - 9 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Americano - 9 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img15,
   },
   {
     id: 5,
-    name: "Affogato - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Affogato - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img14,
   },
   {
     id: 6,
-    name: "Caffè Latte - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Caffè Latte - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img17,
   },
   {
     id: 6,
-    name: "Mocha - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Mocha - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img14,
   },
   {
     id: 7,
-    name: "Frappé - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Frappé - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img16,
   },
-]);
+])
 
 const europa = ref([
   {
     id: 4,
-    name: "Leche y Leche (Spanish) - 9 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Leche y Leche (Spanish) - 9 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img21,
   },
   {
     id: 5,
-    name: "Kleiner Schwarzer - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Kleiner Schwarzer - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img20,
   },
   {
     id: 6,
-    name: "Café Crema - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Café Crema - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img19,
   },
   {
     id: 6,
-    name: "Zapekanka - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Zapekanka - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img22,
   },
   {
     id: 1,
-    name: "Café au Lait - 10 LB",
-    description: "Redeem this reward for a free coffee of your choice.",
+    name: 'Café au Lait - 10 LB',
+    description: 'Redeem this reward for a free coffee of your choice.',
     points: 500,
     image: img18,
   },
-]);
+])
 const asia = ref([
   {
     id: 7,
-    name: "Korean Dalgona Coffee - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Korean Dalgona Coffee - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img24,
   },
   {
     id: 8,
-    name: "Sri Lankan Milk Coffee - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Sri Lankan Milk Coffee - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img25,
   },
   {
     id: 9,
-    name: "Indonesian Kopi Luwak - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Indonesian Kopi Luwak - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img23,
   },
   {
     id: 9,
-    name: "Laotian Lao Coffee - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Laotian Lao Coffee - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img7,
   },
   {
     id: 4,
-    name: "Thai Iced Coffee - 9 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Thai Iced Coffee - 9 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img26,
   },
-]);
-
-
+])
 
 const africa = ref([
   {
     id: 1,
-    name: "Ethiopian Yirgacheffe - 10 LB",
-    description: "Redeem this reward for a free coffee of your choice.",
+    name: 'Ethiopian Yirgacheffe - 10 LB',
+    description: 'Redeem this reward for a free coffee of your choice.',
     points: 500,
-    image: img1,
+    image: img29,
   },
   {
     id: 2,
-    name: "Kenyan AA - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Kenyan AA - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 700,
-    image: img2,
+    image: img28,
   },
   {
     id: 3,
-    name: "Tanzanian Peaberry - 7 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Tanzanian Peaberry - 7 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 600,
     image: img3,
   },
   {
     id: 3,
-    name: "Jamaican Blue Mountain - 7 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Jamaican Blue Mountain - 7 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 600,
     image: img1,
   },
   {
     id: 6,
-    name: "Robusta Kiandu - 10 LB",
-    description: "Get a discount on any merchandise purchase.",
+    name: 'Robusta Kiandu - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
     points: 1000,
-    image: img6,
+    image: img27,
   },
-]);
+])
 </script>
 <template>
   <div class="py-10">
@@ -278,7 +273,6 @@ const africa = ref([
         :breakpoints="breakpoints"
         :space-between="10"
         :loop="true"
-        @slideChange="onSlideChange"
         :modules="modules"
         :autoplay="{
           delay: 3000,
@@ -438,7 +432,7 @@ const africa = ref([
             </div>
           </div>
         </swiper-slide>
-        
+
         <swiper-slide class="">
           <div>
             <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
@@ -461,7 +455,7 @@ const africa = ref([
                 </h1>
                 <nuxt-link
                   :to="{ path: '/products', query: { menu: item.slug } }"
-                  class="bg-[#6F4E37] btn px-5 py-1.5 "
+                  class="bg-[#6F4E37] btn px-5 py-1.5"
                 >
                   See All
                 </nuxt-link>

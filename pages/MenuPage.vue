@@ -1,72 +1,65 @@
 <script setup>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
+import 'swiper/css'
+import 'swiper/css/navigation'
+import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 
-import { Plus, Minus, Star } from "lucide-vue-next";
+import { onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import Menu from '~/components/Menu.vue'
 
-import { menuData } from "/stores/dummyMenuData.js";
-import { onMounted } from "vue";
-import { useRoute } from "vue-router";
-import Menu from "~/components/Menu.vue";
+const store = useProductsStore()
+const modules = [Autoplay, Pagination, Navigation]
 
-const store = useProductsStore();
-const modules = [Autoplay, Pagination, Navigation];
-
-const getMenu = async() => {
+const getMenu = async () => {
   const data = await $fetch('api/products/get_menu')
   console.log(data, 'from menu page')
-  
-  store.menu = data;
+
+  store.menu = data
 }
 
 // const menu = menuData;
 const menu = computed(() => {
   return store.menu
-}) 
+})
 
-
-
-const { setRouterHistory } = useHeaderStore();
-const loginCookie = useCookie("loginCookie");
-const tokenCookie = useCookie("tokenCookie");
-const router = useRouter();
-const nuxtApp = useNuxtApp();
+const { setRouterHistory } = useHeaderStore()
+const loginCookie = useCookie('loginCookie')
+const tokenCookie = useCookie('tokenCookie')
+const router = useRouter()
+const nuxtApp = useNuxtApp()
 const placeOrder = () => {
   if (loginCookie.value && loginCookie.value.email) {
-    router.push("/checkout");
+    router.push('/checkout')
   } else {
-    setRouterHistory("/checkout");
-    nuxtApp.$toast("clear");
-    nuxtApp.$toast("success", {
-      message: "Please login first!",
-      className: "alert_error",
-    });
-    router.push("/login/user-dashboard");
+    setRouterHistory('/checkout')
+    nuxtApp.$toast('clear')
+    nuxtApp.$toast('success', {
+      message: 'Please login first!',
+      className: 'alert_error',
+    })
+    router.push('/login/user-dashboard')
   }
-};
+}
 
-const selectedMenu = ref("");
+const selectedMenu = ref('')
 const menuSelect = (id) => {
   // const filteredItems = menu.filter((item) => item.id == id);
   // selectedMenu.value = filteredItems[0];
   // console.log(selectedMenu.value);
-  selectedMenu.value = menu.find((item) => item.id == id);
-};
+  selectedMenu.value = menu.find((item) => item.id == id)
+}
 
-const route = useRoute();
+const route = useRoute()
 
 const allMenu = () => {
-  selectedMenu.value = "";
-};
-
+  selectedMenu.value = ''
+}
 
 const removeCart = () => {
-  store.cart.length--;
-};
+  store.cart.length--
+}
 
-const currentSelectedMenuItem = ref("");
+const currentSelectedMenuItem = ref('')
 const total = computed(() => {
   let t = 0
   store.cart.map((e) => (t += e.price * e.quantity))
@@ -75,20 +68,20 @@ const total = computed(() => {
 watch(
   () => selectedMenu.value.item,
   () => {
-    currentSelectedMenuItem.value = "";
+    currentSelectedMenuItem.value = ''
     setTimeout(() => {
-      currentSelectedMenuItem.value = selectedMenu.value.item;
-    }, 100);
-    console.log(selectedMenu.value.item, "from watch");
+      currentSelectedMenuItem.value = selectedMenu.value.item
+    }, 100)
+    console.log(selectedMenu.value.item, 'from watch')
   }
-);
+)
 
 onMounted(async () => {
   getMenu()
   if (route.query.menu) {
-    selectedMenu.value = menu.find((e) => e.slug == route.query.menu);
+    selectedMenu.value = menu.find((e) => e.slug == route.query.menu)
   }
-});
+})
 </script>
 <!--  -->
 <template>
@@ -105,15 +98,15 @@ onMounted(async () => {
 
     <!-- {{ store.menu }} -->
 
-    <div class="px-[10%] flex flex-col-reverse md:flex-row gap-5 pb-5">
+    <div class="px-[10%] flex flex-col-reverse md:flex-row items justify-center gap-5 pb-5">
       <div class="w-full md:w-3/4">
-        <div class=" rounded-b-lg sticky top-[80px] z-10 px-1 py-5">
+        <div class="rounded-b-lg sticky top-[80px] z-10 px-1 py-5">
           <!-- <div class="bg-white border p-2 rounded-full drop-shadow-md">
             <swiper
               :slides-per-view="3.5"
               :space-between="10"
               :loop="true"
-              @slideChange="onSlideChange"
+               
               :pagination="{ clickable: true }"
               :modules="modules"
               class="rounded-full"
@@ -168,32 +161,17 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div class="w-full md:w-1/4">
+      <!-- <div class="w-full md:w-1/4">
         <div class="sticky top-[80px] z-10 py-5">
           <div class="bg-white rounded-xl drop-shadow-md p-3 mb-3">
-          <!-- <div class="py-1.5 text-sm">Change Branch</div>
-          <Select>
-            <SelectTrigger class="w-full border-none">
-              <SelectValue placeholder="Select Branch" />
-            </SelectTrigger>
-            <SelectContent
-              class="bg-white border-none drop-shadow-xl rounded-xl"
-            >
-              <SelectGroup>
-                <SelectItem value="Murphy"> Murphy </SelectItem>
-                <SelectItem value="Rockwall"> Rockwall </SelectItem>
-                <SelectItem value="Red Oak"> Red Oak </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select> -->
 
-          <div
-            class="pb-2 flex items-center gap-2 text-green-600 text-sm font-semibold"
-          >
-            <p class="h-3 w-3 rounded-full bg-green-600"></p>
-            Open Now
+            <div
+              class="pb-2 flex items-center gap-2 text-green-600 text-sm font-semibold"
+            >
+              <p class="h-3 w-3 rounded-full bg-green-600"></p>
+              Open Now
+            </div>
           </div>
-        </div>
 
           <div class="bg-white rounded-xl drop-shadow-md p-3 mb-3">
             <div class="py-1.5 text-sm flex items-center gap-2">
@@ -299,11 +277,11 @@ onMounted(async () => {
             <button
               class="w-full py-1.5 px-2 rounded-full bg-[#6F4E37] text-white font-semibold"
             >
-              <p @click="placeOrder()"> Go to checkout</p>
+              <p @click="placeOrder()">Go to checkout</p>
             </button>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

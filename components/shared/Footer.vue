@@ -2,12 +2,22 @@
 <template>
   <div class="pt-8 bg-[#6F4E37] text-white px-[5%]">
     <!-- <img src="/assets/img/common/logo.png" alt="" class="h-[50px]"> -->
-    <p class="text-2xl font-semibold">Coffee Exploration LLC</p>
+<div class="flex  justify-between">
+  <div>
+    <p class="lg:text-3xl font-semibold">Coffee Exploration LLC</p>
     <div>
       3555 Murphy Rd Suite #102, <br />
       Richardson, TX 75082, <br />
       United States
     </div>
+  </div>
+  
+      <div class="bg-white rounded-lg">
+        <nuxt-link to="/" class="text-2xl font-bold ">
+          <img src="@/assets/img/common/logo.png" alt="" class="h-40 transition ease-out hover:scale-90" />
+        </nuxt-link>
+      </div>
+</div>
 
     <!-- <div class="grid grid-cols-1 md:grid-cols-3 rounded-md drop-shadow-md">
         <div class="flex flex-col justify-between md:items-start items-center gap-2 p-5">

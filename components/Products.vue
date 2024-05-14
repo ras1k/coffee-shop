@@ -5,13 +5,14 @@ const config = useRuntimeConfig()
 const props = defineProps(["product"]);
 const product = props.product;
 const route = useRoute();
-console.log(product);
 
-const imageUrl = config.public.imgURL + product.image;
+
+const imageUrl = config.public.productImgURL + product.image;
 const store = useProductsStore();
 
 const addToCart = (product) => {
   store.addToCart({ ...product, quantity: 1 });
+  
   console.log(store.cart);
 };
 
@@ -27,15 +28,17 @@ const removeCart = (id) => {
   <div class="rounded-xl bg-white drop-shadow-md mb-2 md:w-[200px]">
     <div class="md:h-[200px] overflow-hidden rounded-t-xl md:w-[200px] relative">
     <!-- <div class="h-[200px] overflow-hidden rounded-t-xl w-[250px] relative"> -->
-    
+    <!-- {{ product }} -->
       <img v-if="props.product.image" :src="config.public.productImgURL + props.product.image" alt="" class="object-fit" />
       <Skeleton else class="w-[100px] h-5 rounded-full" />
       <p class="absolute rounded-r-lg bg-[#6F4E37] shadow-lg px-2 py-1.5 font-semibold text-white top-5">Not Available</p>
     </div>
     <div class="p-2 flex flex-col justify-between">
+      <nuxt-link :to="`/products/${props.product.id}`">
       <h1 class="text-base font-bold py-2 text-black text-center">
         {{ product.title }}
       </h1>
+      </nuxt-link>
       <p
         v-if="route.name == 'MenuPage'"
         class="text-sm pb-2 text-center h-[60px] overflow-hidden"
@@ -77,7 +80,7 @@ const removeCart = (id) => {
           class="px-2 text-white border-r font-normal flex items-center justify-center"
         >
           <Minus />
-          <ion-icon name="remove-outline" class="text-white"></ion-icon>
+         
         </button>
         <button
           v-else
@@ -85,7 +88,7 @@ const removeCart = (id) => {
           class="px-2 text-white border-r font-normal flex items-center justify-center"
         >
           <Minus />
-          <ion-icon name="remove-outline" class="text-white"></ion-icon>
+         
         </button>
         <p class="px-2 text-white text-center">{{ isInCart }}</p>
         <button

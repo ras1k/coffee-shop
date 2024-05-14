@@ -1,14 +1,14 @@
 <script setup>
 // import arabica from "@/assets/img/exterior/3.jpg"
-import arabica3 from "@/assets/img/exterior/premium/premium1.png"
-import arabica4 from "/assets/img/exterior/premium/Coffee_X__CoffeeX  Asia copy 20.png"
-import arabica5 from "/assets/img/exterior/premium/Coffee_X__CoffeeX  Asia copy 23.png"
+import arabica3 from "@/assets/img/exterior/premium/premium1.png";
+import arabica4 from "/assets/img/exterior/premium/Coffee_X__CoffeeX  Asia copy 20.png";
+import arabica5 from "/assets/img/exterior/premium/Coffee_X__CoffeeX  Asia copy 23.png";
 // import arabica6 from "/assets/img/exterior/premium/Coffee_X__CoffeeX  Asia copy 23.png"
-import arabica_premium from "@/assets/img/video/arabica_premium.mp4"
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay } from "swiper/modules";
+import arabica_premium from "@/assets/img/video/arabica_premium.mp4";
 import "swiper/css";
 import "swiper/css/navigation";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/vue";
 
 const modules = [Autoplay];
 
@@ -19,7 +19,7 @@ const modules = [Autoplay];
       :slides-per-view="1"
       :space-between="10"
       :loop="true"
-      @slideChange="onSlideChange"
+       
       :autoplay="{
         delay: 4000,
         disableOnInteraction: true,

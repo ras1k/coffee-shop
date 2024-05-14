@@ -5,6 +5,7 @@ export const useProductsStore = defineStore({
     cart: [],
     order: [],
     product: [],
+    allProduct: [],
     menu: [],
     orderdata: null,
   }),

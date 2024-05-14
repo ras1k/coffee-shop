@@ -1,17 +1,12 @@
 <script setup>
-import arabica from "/assets/img/location/arabica.jpg";
-import america from "/assets/img/location/america.jpg";
-import africa from "/assets/img/location/africa.jpg";
-import asia from "/assets/img/location/asia.jpg";
-import europa from "/assets/img/location/europa.jpg";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import lounge from "@/assets/img/exterior/Europa_Lounge/Europa_Lounge_-40.png";
 import lounge1 from "@/assets/img/exterior/Europa_Lounge/Europa_Lounge_-28.png";
 import lounge2 from "@/assets/img/exterior/Europa_Lounge/Europa_Lounge_-33.png";
+import lounge from "@/assets/img/exterior/Europa_Lounge/Europa_Lounge_-40.png";
 import lounge3 from "@/assets/img/exterior/Europa_Lounge/Europa_Lounge_-43.png";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/vue";
 import video from "/assets/img/video/Europa_Lounge.mp4";
 
 const modules = [Autoplay];
@@ -23,7 +18,7 @@ const modules = [Autoplay];
       :slides-per-view="1"
       :space-between="10"
       :loop="true"
-      @slideChange="onSlideChange"
+       
       :autoplay="{
         delay: 4000,
         disableOnInteraction: true,

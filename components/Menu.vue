@@ -97,13 +97,13 @@ const removeCart = (id) => {
         </button>
       </div>
 
-      <button
+      <!-- <button
         v-else
         @click="addToCart(product)"
         class="bg-[#6F4E37] text-white px-5 py-1.5 rounded-xl w-full"
       >
         Add to Cart
-      </button>
+      </button> -->
     </div>
   </div>
 </template>

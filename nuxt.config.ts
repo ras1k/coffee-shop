@@ -2,7 +2,9 @@
 import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
-
+ devtools: {
+    enabled: true // or false to disable
+  },
   app: {
     head: {
       title: 'CoffeeX',
@@ -50,6 +52,5 @@ export default defineNuxtConfig({
     '@unlok-co/nuxt-stripe',
     
   ],
- 
-  devtools: { enabled: true },
+
 })

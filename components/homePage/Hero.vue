@@ -1,7 +1,8 @@
 <script setup>
 import coffee1 from "@/assets/img/home/hero/coffee1.jpg";
-import coffee2 from "@/assets/img/home/hero/coffee2.jpg";
-import coffee3 from "@/assets/img/home/hero/coffee6.jpg";
+import coffee2 from "@/assets/img/home/hero/bean.jpg";
+// import coffee3 from "@/assets/img/home/hero/coffee6.jpg";
+import coffee3 from "@/assets/img/home/hero/cup.jpg";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay } from "swiper/modules";
 
@@ -10,31 +11,31 @@ const modules = [Autoplay];
 const heroSlider = ref([
   {
     id: 1,
-    image: coffee1,
-    title: "Welcome to Coffee Exploration LLC",
-    description: "The Best Coffee in Town!",
-  },
-  {
-    id: 2,
     image: coffee2,
     title: "Welcome to Coffee Exploration LLC",
     description: "The Best Coffee in Town!",
   },
   {
-    id: 3,
+    id: 2,
     image: coffee3,
+    title: "Welcome to Coffee Exploration LLC",
+    description: "The Best Coffee in Town!",
+  },
+  {
+    id: 3,
+    image: coffee1,
     title: "Welcome to Coffee Exploration LLC",
     description: "The Best Coffee in Town!",
   },
 ]);
 </script>
 <template>
-  <div class="h-[70vh]">
+  <div class="h-[50vh]">
     <swiper
       :slides-per-view="1"
       :space-between="10"
       :loop="true"
-      @slideChange="onSlideChange"
+     
       :modules="modules"
       :autoplay="{
         delay: 7000,
@@ -45,7 +46,7 @@ const heroSlider = ref([
       <swiper-slide class="relative" v-for="(item, index) in heroSlider">
         <img :src="item.image" alt="" />
         <div
-          class="bg-[#00000052] absolute z-10 h-full w-full flex flex-col gap-5 justify-center items-center px-[5%] pt-[60px]"
+          class="bg-[#00000052] absolute z-10 h-full w-full flex flex-col gap-5 justify-center items-center "
         >
           <h1 class="text-3xl md:text-5xl text-white font-bold">
             {{ item.title }}
