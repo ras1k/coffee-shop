@@ -3,11 +3,11 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import { Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import premium2 from '/assets/img/exterior/Africa_Premium/Coffee_X_Africa Premium-20.png'
-import premium1 from '/assets/img/exterior/Africa_Premium/Coffee_X_Africa Premium-25.png'
-import premium3 from '/assets/img/exterior/Africa_Premium/Coffee_X_Africa Premium-26.png'
-import premium4 from '/assets/img/exterior/Africa_Premium/Coffee_X_Africa Premium-27.png'
-import video from '/assets/img/video/africa_premium.mp4'
+import premium2 from '@/assets/img/exterior/Africa_Premium/Coffee_X_Africa Premium-20.png'
+import premium1 from '@/assets/img/exterior/Africa_Premium/Coffee_X_Africa Premium-25.png'
+import premium3 from '@/assets/img/exterior/Africa_Premium/Coffee_X_Africa Premium-26.png'
+import premium4 from '@/assets/img/exterior/Africa_Premium/Coffee_X_Africa Premium-27.png'
+import video from '@/assets/img/video/africa_premium.mp4'
 
 const modules = [Autoplay]
 </script>
