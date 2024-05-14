@@ -7,7 +7,7 @@ import premium2 from '@/assets/img/exterior/Africa_Premium/Coffee_X_Africa Premi
 import premium1 from '@/assets/img/exterior/Africa_Premium/Coffee_X_Africa Premium-25.png'
 import premium3 from '@/assets/img/exterior/Africa_Premium/Coffee_X_Africa Premium-26.png'
 import premium4 from '@/assets/img/exterior/Africa_Premium/Coffee_X_Africa Premium-27.png'
-// import video from '@/assets/img/video/africa_premium.mp4'
+import video from '@/assets/img/video/africa_premium.mp4'
 
 const modules = [Autoplay]
 </script>
@@ -90,13 +90,13 @@ const modules = [Autoplay]
           </div>
         </div>
       </swiper-slide>
-      <!-- <swiper-slide class="">
+      <swiper-slide class="">
         <div class="h-[70vh] w-full relative">
           <video autoplay controls loop class="h-[100%] w-full border">
             <source :src="video" type="video/mp4" />
           </video>
         </div>
-      </swiper-slide> -->
+      </swiper-slide>
     </swiper>
 
     <div class="container py-6 text-lg">
