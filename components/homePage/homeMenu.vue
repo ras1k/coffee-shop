@@ -19,11 +19,12 @@ import img27 from '/assets/img/coffeebag/Robusta Kiandu@0.5x.jpg'
 import img25 from '/assets/img/coffeebag/Sri Lankan Milk Coffee.png.jpg'
 import img26 from '/assets/img/coffeebag/Thai Iced Coffee-1.png'
 import img22 from '/assets/img/coffeebag/Zapekanka.jpg'
-import img14 from '/assets/img/coffeebag/affogato.png'
-import img15 from '/assets/img/coffeebag/americano.png'
+import img14 from '/assets/img/coffeebag/america/Affogato - 10 LB @.png'
+import img15 from '/assets/img/coffeebag/america/Robusta@.png'
 import img10 from '/assets/img/coffeebag/arabiandark.png'
 import img11 from '/assets/img/coffeebag/arabianexpresso.png'
-import img16 from '/assets/img/coffeebag/frappe.png'
+import img16 from '/assets/img/coffeebag/america/Frappé@.jpg'
+import img30 from '/assets/img/coffeebag/america/Frappuccino@.jpg'
 import img17 from '/assets/img/coffeebag/latte.png'
 import img12 from '/assets/img/coffeebag/qishr.png'
 import img13 from '/assets/img/coffeebag/saudiblend.png'
@@ -106,8 +107,15 @@ const arabica = ref([
 ])
 const america = ref([
   {
+    id: 6,
+    name: 'Frappuccino - 10 LB',
+    description: 'Get a discount on any merchandise purchase.',
+    points: 1000,
+    image: img30,
+  },
+  {
     id: 4,
-    name: 'Americano - 9 LB',
+    name: 'American Robusta - 9 LB',
     description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img15,
@@ -125,13 +133,6 @@ const america = ref([
     description: 'Get a discount on any merchandise purchase.',
     points: 1000,
     image: img17,
-  },
-  {
-    id: 6,
-    name: 'Mocha - 10 LB',
-    description: 'Get a discount on any merchandise purchase.',
-    points: 1000,
-    image: img14,
   },
   {
     id: 7,
