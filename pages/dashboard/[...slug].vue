@@ -39,7 +39,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="mt-10 h-full pt-5">
+  <div class="mt-10 h-full">
     <!-- <BaseHeaderTitle /> -->
     <div
       class="flex lg:flex-row flex-col min-h-screen w-full bg-[#6F4E37] text-lg font-semibold mt-5 rounded-r-lg"
@@ -429,6 +429,9 @@ onMounted(() => {
         <!-- Content for User Dashboard System -->
         <DashboardUserDashboardViewUserOrders
           v-if="currentTab.includes('View User Orders')"
+        />
+        <DashboardUserDashboardRecurringOrders
+          v-if="currentTab.includes('Recurring Orders')"
         />
         <DashboardUserDashboardPaymentHistory
           v-if="currentTab.includes('Payment History')"

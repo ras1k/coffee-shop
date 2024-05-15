@@ -48,9 +48,7 @@ const years = ref(5);
 <template>
   <section id="investment-opportunity" class="py-12 bg-gray-100">
     <div class="container mx-auto">
-      <h2 class="text-3xl font-bold text-center pb-5">
-        Investment Opportunity
-      </h2>
+      <h2 class="text-4xl text-center font-bold pb-5 text-[#6F4E37]">Investment Opportunity</h2>
       <hr class="border-b-1 w-1/2 mx-auto mb-4 border-black">
       <div class="flex flex-col lg:flex-row gap-5 items-start justify-center">
         <div class="w-full lg:w-2/3">

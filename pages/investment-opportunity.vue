@@ -214,7 +214,7 @@ import invest3 from "/assets/img/investment/Coffee_X-21.jpg";
       <div class="text-[#6F4E37] text-center font-semibold py-6 text-3xl">
         Do you want to invest?
         <NuxtLink
-          to="/register"
+          to="/investor-register"
           class="text-blue-400 hover:underline underline-offset-2"
         >
           Register Here

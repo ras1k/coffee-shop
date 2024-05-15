@@ -77,11 +77,50 @@ onMounted(() => {
             <div
               class="p-2 rounded-md absolute top-[100%] right-0 hidden group-hover:flex text-black bg-white drop-shadow-md flex-col gap-2"
             >
-              <NuxtLink to="/products" class="hover:bg-[#e6e1ce] px-2 py-1 rounded">Products</NuxtLink>
-              <!-- <NuxtLink to="/catering-prices">Catering Prices</NuxtLink>
-              <NuxtLink to="/coffee-school">Coffee School</NuxtLink> -->
-              <NuxtLink to="/equipments" class="hover:bg-[#e6e1ce] px-2 py-1 rounded">Equipment</NuxtLink>
-              <NuxtLink to="/wholesale" class="hover:bg-[#e6e1ce] px-2 py-1 rounded">Wholesale</NuxtLink>
+              <!-- <NuxtLink to="/products" class="hover:bg-[#e6e1ce] px-2 py-1 rounded">Products</NuxtLink> -->
+
+              <ul class="relative submenu">
+                <NuxtLink to="/products" class="hover:bg-[#e6e1ce] px-2 py-1 rounded flex justify-between">Products <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 256 512"
+              width="24"
+              height="24"
+              fill="rgb(111,78,55)"
+            >
+              <path
+                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
+              ></path>
+            </svg>  </NuxtLink>
+                
+              <ul class="w-[150px] absolute hidden p-2 right-[-120%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item">
+                <li class="shadow-2xl py-1 text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/products" class=" p-2 rounded">Retail</nuxt-link></li>
+                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/products" class="p-2 rounded">Wholesale</nuxt-link></li>
+              </ul>
+              </ul>
+              <ul class="relative submenu">
+                <NuxtLink to="/equipments" class="hover:bg-[#e6e1ce] px-2 py-1 rounded flex justify-between">Equipment <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 256 512"
+              width="24"
+              height="24"
+              fill="rgb(111,78,55)"
+            >
+              <path
+                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
+              ></path>
+            </svg>  </NuxtLink>
+                
+              <ul class="w-[150px] absolute hidden p-2 right-[-120%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item">
+                <li class="shadow-2xl py-1 text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/equipments" class=" p-2 rounded">Retail</nuxt-link></li>
+                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/equipments" class="p-2 rounded">Wholesale</nuxt-link></li>
+              </ul>
+              </ul>
+
+
+
+
+              <!-- <NuxtLink to="/equipments" class="hover:bg-[#e6e1ce] px-2 py-1 rounded">Equipment</NuxtLink> -->
+              <!-- <NuxtLink to="/wholesale" class="hover:bg-[#e6e1ce] px-2 py-1 rounded">Wholesale</NuxtLink> -->
             </div>
           </div>
         </div>

@@ -40,7 +40,7 @@ onMounted(() => {
         <h2
           class="text-2xl font-semibold leading-tight border-b pb-2 border-orange-400"
         >
-          My Orders
+          Recurring Orders
         </h2>
       </div>
       <div class="my-2 flex sm:flex-row flex-col">

@@ -1,8 +1,8 @@
 <script setup>
 
-import arabica from "/assets/img/location/arabica.jpg";
-import america from "/assets/img/location/america.jpg";
-import europa from "/assets/img/location/europa.jpg";
+import arabica from "/assets/img/exterior/asia-lounge/Artboard 1 copy 30@0.5x.png";
+import america from "/assets/img/exterior/asia-lounge/Artboard 1 copy 31@0.5x.png";
+import europa from "/assets/img/exterior/asia-lounge/Artboard 1 copy 32@0.5x.png";
 
 import invest from "@/assets/img/Coffee_X_Asia/Coffee_X_Asia-54.png";
 import invest1 from "@/assets/img/Coffee_X_Asia/Coffee_X_Asia-49.png";
@@ -13,7 +13,7 @@ import invest3 from "@/assets/img/Coffee_X_Asia/Coffee_X_Asia-53.png";
 <template>
   <div class="mx-auto rounded-lg">
     <div
-      class="h-[50svh] bg-[url('/assets/img/interior/7.jpg')] bg-cover"
+      class="h-[50svh] bg-[url('/assets/img/exterior/asia-lounge/cover.png')] bg-cover"
     >
     <div
     class="w-full h-full bg-[#00000067] flex justify-center items-center text-white text-6xl font-semibold flex-col gap-2"

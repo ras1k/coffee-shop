@@ -85,7 +85,7 @@ const rewards = ref([
 <template>
   <div class="mx-auto rounded-lg">
     <div
-      class="h-[50svh] bg-[url('/assets/img/home/hero/coffee2.jpg')] bg-cover"
+      class="h-[40svh] bg-[url('/assets/img/home/hero/coffee2.jpg')] bg-cover"
     >
       <div
         class="w-full h-full bg-[#00000067] flex justify-center items-center text-white text-6xl font-semibold"

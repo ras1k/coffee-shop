@@ -1,9 +1,9 @@
 <script setup>
 import { Plus, Minus, Star } from "lucide-vue-next";
 import MenuPage from "../pages/MenuPage.vue";
-const config = useRuntimeConfig()
 const props = defineProps(["product"]);
 const product = props.product;
+const config = useRuntimeConfig()
 const route = useRoute();
 
 
@@ -99,13 +99,24 @@ const removeCart = (id) => {
         </button>
       </div>
 
-      <button
+
+      <nuxt-link v-else :to="`/products/${props.product.id}`">
+        <button
+        class="bg-[#6F4E37] text-white px-5 py-1.5 rounded-xl w-full"
+      >
+        Add to Cart
+      </button>
+        </nuxt-link>
+
+
+        <!-- <button
         v-else
         @click="addToCart(product)"
         class="bg-[#6F4E37] text-white px-5 py-1.5 rounded-xl w-full"
       >
         Add to Cart
-      </button>
+      </button> -->
+
     </div>
   </div>
 </template>

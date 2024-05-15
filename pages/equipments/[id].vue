@@ -8,11 +8,8 @@ import { Plus, Minus, Star, Axis3DIcon } from "lucide-vue-next";
 const store = useProductsStore();
 const route = useRoute();
 const config = useRuntimeConfig()
-const selectedType = ref('Grinded')
-const selectedSaleType = ref('Retail')
 const selectedRoast = ref(null);
 const selectedPackSize = ref(null);
-
 
 const product = computed(() => {
   let prod = null;
@@ -24,8 +21,6 @@ const product_detail = ref()
 const sizes = ref([])
 const roasts = ref([])
 const price = ref([])
-const quantity = ref([])
-
 const getProductDetails = async (id) => {
   
   const data = await useApi('/product_detail/'+ route.params.id )
@@ -43,12 +38,6 @@ const getProductDetails = async (id) => {
     {
       price.value.push(e.product_price)
     }
-    
-    let checkQuantity = quantity.value.find((f) => e.quantity)
-    if(!checkQuantity)
-    {
-      quantity.value.push(e.quantity)
-    }
 
     let checkRoast = roasts.value.find((f) => f ==  e.product_roast_title)
     if (!checkRoast)
@@ -64,10 +53,6 @@ const getProductDetails = async (id) => {
   })
   console.log('Get api from product details', data)
 }
-const types = [
-  'Whole Bean', 
-  'Grinded Bean'
-];
 
 const imageUrl = config.public.productImgURL + product.image;
 
@@ -97,10 +82,6 @@ const changeType = (type) => {
   selectedRoast.value = type;
 };
 
-const changeBean = (bean) => {
-  selectedType.value = bean;
-}
-
 const selectSize = (size) => {
 
   selectedPackSize.value = size;
@@ -128,7 +109,7 @@ onMounted(() => {
     >
 
       <div class="w-1/2 h-[450px] flex-1">
-      <div class="w-full h-full mb-2 object-cover">
+      <div class="w-full h-[80%] mb-2 object-cover">
           <img :src="config.public.productImgURL+filteredImages?.product_image" class="h-full w-full rounded-lg border-2 border-yellow-700">
         </div>
         <!-- {{ product_detail?.image[0].product_roast_title }} -->
@@ -157,7 +138,8 @@ onMounted(() => {
     
       <div class="flex-1">
         <h1 class="text-3xl font-bold mb-4">{{ product_detail?.title }}</h1>
-        <!-- <p v-html="product_detail?.short_description" class=""></p> -->
+        <!-- {{  product_detail }} -->
+        <p v-html="product_detail?.short_description" class=""></p>
         <div class="flex py-2 font-bold gap-1">
           <Star class="w-3 h-3" v-for="rating in 5" v-if="!product_detail?.rating" />
           <svg
@@ -181,139 +163,13 @@ onMounted(() => {
             v-for="star in 5 - Math.floor(product_detail?.rating)"
           />
         </div>
-
-        <div class="py-1">
-          <div class="flex space-x-4">
-            <!-- Grinded -->
-            <label
-              :class="{
-                'px-4 py-2 border rounded cursor-pointer': true,
-                'bg-[#6F4E37] text-white': selectedSaleType === 'Retail',
-                'bg-white text-gray-700': selectedSaleType !== 'Retail',
-              }"
-            >
-              <input
-                type="radio"
-                name="grind"
-                value="Retail"
-                v-model="selectedSaleType"
-                class="hidden"
-              />
-              Retail
-            </label>
-        
-            <!-- Whole Bean -->
-            <label
-              :class="{
-                'px-4 py-2 border rounded cursor-pointer': true,
-                'bg-[#6F4E37] text-white': selectedSaleType === 'Whole Sale',
-                'bg-white text-gray-700': selectedSaleType !== 'Whole Sale',
-              }"
-            >
-              <input
-                type="radio"
-                name="grind"
-                value="Whole Sale"
-                v-model="selectedSaleType"
-                class="hidden"
-              />
-              Whole Sale
-            </label>
-          </div>
+        <div class="text-2xl text-red-500 font-bold mb-6">
+          ${{ product_detail?.price.toFixed(2) }}
         </div>
-
-      
-
-        <div class="py-4">
-          <label class="block mb-2 text-xl font-semibold" for="packSize"
-          >Select Type:</label
-        >
-          <div class="flex space-x-4">
-            <!-- Grinded -->
-            <label
-              :class="{
-                'px-4 py-2 border rounded cursor-pointer': true,
-                'bg-[#6F4E37] text-white': selectedType === 'Grinded',
-                'bg-white text-gray-700': selectedType !== 'Grinded',
-              }"
-            >
-              <input
-                type="radio"
-                name="grind"
-                value="Grinded"
-                v-model="selectedType"
-                class="hidden"
-              />
-              Grinded
-            </label>
-        
-            <!-- Whole Bean -->
-            <label
-              :class="{
-                'px-4 py-2 border rounded cursor-pointer': true,
-                'bg-[#6F4E37] text-white': selectedType === 'Whole Bean',
-                'bg-white text-gray-700': selectedType !== 'Whole Bean',
-              }"
-            >
-              <input
-                type="radio"
-                name="grind"
-                value="Whole Bean"
-                v-model="selectedType"
-                class="hidden"
-              />
-              Whole Bean
-            </label>
-          </div>
-        </div>
-
-
-
-
-
-        <label class="block mb-2 text-xl font-semibold" for="packSize"
-          >Select Roast Type:</label
-        >
-        <div class="flex space-x-4 py-2">
-         
-          <label v-for="roast in roasts" 
-                :class="{
-                    'px-4 py-2 border rounded cursor-pointer': true,
-                    'bg-[#6F4E37] text-white': selectedRoast === roast,
-                    'bg-white text-gray-700': selectedRoast !== roast,
-                }"
-                @click="changeType(roast)"
-            >
-            <input  type="radio" :value="roast" v-model="selectedRoast" class="hidden" name="roast" />
-            {{ roast }}
-            </label>
-
-        </div>
-        <div>
-          <label class="block mb-2 text-xl font-semibold pt-4" for="packSize"
-            >Select Pack Size:</label
-          >
-          <select
-            id="packSize"
-            v-model="selectedPackSize"
-            class="block w-2/5 p-2 border rounded-md bg-white text-gray-700 text-lg font-semibold"
-          >
-            <option v-for="size in sizes"  :value="size" class="text-lg font-semibold py-1">
-              {{ size}}
-            </option>
-            
-          </select>
-
-         
-        </div>
-
-        <div class="text-2xl text-green-500 font-bold py-6">
-          <span class="text-gray-700">Price:</span> ${{ filteredImages?.product_price.toFixed(2) }}
-        </div>
-
+        <!-- {{ product_detail.image }} -->
         <div
         v-if="isInCart > 0"
-        class="flex bg-[#6F4E37] px-5 py-1.5 rounded-xl items-center justify-between w-[300px]"
+        class="flex bg-[#6F4E37] px-5 py-1.5 rounded-xl items-center justify-between mt-10 w-[300px]"
       >
         <button
           v-if="isInCart > 1"
@@ -331,8 +187,7 @@ onMounted(() => {
           <Minus />
          
         </button>
-        <p  class="px-2 text-white text-center">{{ isInCart }}</p>
-        <!-- <input class="px-2 text-black text-center" :value="isInCart" /> -->
+        <p class="px-2 text-white text-center">{{ isInCart }}</p>
         <button
           @click="store.increaseCart(product.id)"
           class="px-2 text-white border-l flex items-center justify-center"
@@ -344,7 +199,7 @@ onMounted(() => {
       <button
         v-else
         @click="addToCart(product)"
-        class="bg-[#6F4E37] text-white px-5 py-1.5 rounded-xl w-[300px]"
+        class="bg-[#6F4E37] text-white px-5 py-1.5 rounded-xl w-[300px] mt-10"
       >
         Add to Cart
       </button>

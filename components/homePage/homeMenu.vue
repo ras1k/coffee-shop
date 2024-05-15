@@ -4,30 +4,26 @@ import 'swiper/css/navigation'
 import { Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 
-import img1 from '/assets/img/coffeebag/1.jpg'
-import img3 from '/assets/img/coffeebag/3.webp'
-import img7 from '/assets/img/coffeebag/7.jpg'
-import img19 from '/assets/img/coffeebag/Café Crema@0.3x.jpg'
-import img18 from '/assets/img/coffeebag/Café au Lait.png'
-import img29 from '/assets/img/coffeebag/Ethiopian Yirgacheffe.jpg'
-import img23 from '/assets/img/coffeebag/Indonesian Kopi Luwak@0.3x.jpg'
-import img28 from '/assets/img/coffeebag/Kenyan AA@0.33x.jpg'
-import img20 from '/assets/img/coffeebag/Kleiner Schwarzer.jpg'
-import img24 from '/assets/img/coffeebag/Korean Dalgona Coffee@0.5x.jpg'
-import img21 from '/assets/img/coffeebag/Leche y Leche.jpg'
-import img27 from '/assets/img/coffeebag/Robusta Kiandu@0.5x.jpg'
-import img25 from '/assets/img/coffeebag/Sri Lankan Milk Coffee.png.jpg'
-import img26 from '/assets/img/coffeebag/Thai Iced Coffee-1.png'
-import img22 from '/assets/img/coffeebag/Zapekanka.jpg'
-import img14 from '/assets/img/coffeebag/america/Affogato - 10 LB @.png'
-import img15 from '/assets/img/coffeebag/america/Robusta@.png'
-import img10 from '/assets/img/coffeebag/arabiandark.png'
-import img11 from '/assets/img/coffeebag/arabianexpresso.png'
-import img16 from '/assets/img/coffeebag/america/Frappé@.jpg'
-import img30 from '/assets/img/coffeebag/america/Frappuccino@.jpg'
-import img17 from '/assets/img/coffeebag/latte.png'
-import img12 from '/assets/img/coffeebag/qishr.png'
-import img13 from '/assets/img/coffeebag/saudiblend.png'
+
+import img19 from '@/assets/img/coffeebag/Café Crema@0.3x.jpg'
+import img18 from '@/assets/img/coffeebag/Café au Lait.png'
+import img29 from '@/assets/img/coffeebag/africa/Ethiopian Yirgacheffe@.jpg'
+import img23 from '@/assets/img/coffeebag/asia/Indonesian Kopi Luwak@.jpg'
+import img28 from '@/assets/img/coffeebag/africa/Kenyan AA@.jpg'
+import img21 from '@/assets/img/coffeebag/Leche y Leche.jpg'
+import img27 from '@/assets/img/coffeebag/africa/Robusta Kiandu@.jpg'
+import img25 from '@/assets/img/coffeebag/asia/Sri Lankan Milk Coffee@.jpg'
+import img26 from '@/assets/img/coffeebag/asia/Thai Iced Coffee @.jpg'
+import img22 from '@/assets/img/coffeebag/Zapekanka.jpg'
+import img14 from '@/assets/img/coffeebag/america/Affogato - 10 LB @.png'
+import img15 from '@/assets/img/coffeebag/america/Robusta@.png'
+import img10 from '@/assets/img/coffeebag/arabiandark.png'
+import img11 from '@/assets/img/coffeebag/arabianexpresso.png'
+import img16 from '@/assets/img/coffeebag/america/Frappé@.jpg'
+import img30 from '@/assets/img/coffeebag/america/Frappuccino@.jpg'
+import img17 from '@/assets/img/coffeebag/latte.png'
+import img12 from '@/assets/img/coffeebag/qishr.png'
+import img13 from '@/assets/img/coffeebag/saudiblend.png'
 import { menuData } from '/stores/dummyMenuData.js'
 // const getProducts = async() => {
 //   const data = $fetch('api/products')
@@ -156,7 +152,7 @@ const europa = ref([
     name: 'Kleiner Schwarzer - 10 LB',
     description: 'Get a discount on any merchandise purchase.',
     points: 1000,
-    image: img20,
+    image: img22,
   },
   {
     id: 6,
@@ -186,7 +182,7 @@ const asia = ref([
     name: 'Korean Dalgona Coffee - 10 LB',
     description: 'Get a discount on any merchandise purchase.',
     points: 1000,
-    image: img24,
+    image: img26,
   },
   {
     id: 8,
@@ -207,7 +203,7 @@ const asia = ref([
     name: 'Laotian Lao Coffee - 10 LB',
     description: 'Get a discount on any merchandise purchase.',
     points: 1000,
-    image: img7,
+    image: img25,
   },
   {
     id: 4,
@@ -238,14 +234,14 @@ const africa = ref([
     name: 'Tanzanian Peaberry - 7 LB',
     description: 'Get a discount on any merchandise purchase.',
     points: 600,
-    image: img3,
+    image: img29,
   },
   {
     id: 3,
     name: 'Jamaican Blue Mountain - 7 LB',
     description: 'Get a discount on any merchandise purchase.',
     points: 600,
-    image: img1,
+    image: img28,
   },
   {
     id: 6,
@@ -276,7 +272,7 @@ const africa = ref([
         :loop="true"
         :modules="modules"
         :autoplay="{
-          delay: 3000,
+          delay: 2500,
           disableOnInteraction: true,
         }"
         :pagination="{
@@ -286,8 +282,9 @@ const africa = ref([
       >
         <swiper-slide>
           <div>
-            <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
+            <h1 class="text-4xl font-bold  text-[#6F4E37]">
               CoffeeX Arabica
+              <hr class="border-b-1 mt-4 mx-auto mb-6 border-black">
             </h1>
           </div>
           <div class="flex gap-5 w-full justify-between">
@@ -315,8 +312,9 @@ const africa = ref([
         </swiper-slide>
         <swiper-slide class="">
           <div>
-            <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
+            <h1 class="text-4xl font-bold  text-[#6F4E37]">
               CoffeeX America
+              <hr class="border-b-1 mt-4 mx-auto mb-6 border-black">
             </h1>
           </div>
           <div class="flex gap-5 w-full justify-between">
@@ -345,8 +343,9 @@ const africa = ref([
         </swiper-slide>
         <swiper-slide>
           <div>
-            <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
+            <h1 class="text-4xl font-bold  text-[#6F4E37]">
               CoffeeX Asia
+              <hr class="border-b-1 mt-4 mx-auto mb-6 border-black">
             </h1>
           </div>
           <div class="flex gap-5 w-full justify-between">
@@ -375,8 +374,9 @@ const africa = ref([
         </swiper-slide>
         <swiper-slide>
           <div>
-            <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
+            <h1 class="text-4xl font-bold  text-[#6F4E37]">
               CoffeeX Europa
+              <hr class="border-b-1 mt-4 mx-auto mb-6 border-black">
             </h1>
           </div>
           <div class="flex gap-5 w-full justify-between">
@@ -403,7 +403,7 @@ const africa = ref([
             </div>
           </div>
         </swiper-slide>
-        <swiper-slide>
+        <!-- <swiper-slide>
           <div>
             <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
               CoffeeX Asia
@@ -432,12 +432,13 @@ const africa = ref([
               </div>
             </div>
           </div>
-        </swiper-slide>
+        </swiper-slide> -->
 
         <swiper-slide class="">
           <div>
-            <h1 class="text-4xl font-bold pb-10 text-[#6F4E37]">
+            <h1 class="text-4xl font-bold  text-[#6F4E37]">
               CoffeeX Africa
+              <hr class="border-b-1 mt-4 mx-auto mb-6 border-black">
             </h1>
           </div>
           <div class="flex gap-5 w-full justify-between">

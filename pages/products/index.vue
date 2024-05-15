@@ -187,7 +187,7 @@ onMounted(() => {
           >
             <input
               type="text"
-              class="text-black text-lg w-full rounded-lg py-1.5 bg-gray-300 focus:outline-none"
+              class="text-black text-lg font-semibold px-1 w-full rounded-lg py-1.5 bg-[#6f4e372c] focus:outline-none"
             />
             <button for="email" class="btn px-2 py-1.5 w-full font-semibold">
               Search

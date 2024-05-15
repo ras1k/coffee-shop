@@ -3,7 +3,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import asia from "/assets/img/location/asia.jpg";
+import asia from "@/assets/img/exterior/asia-lounge/Artboard 1 copy 30@0.5x.png";
+import asia2 from "@/assets/img/exterior/asia-lounge/Artboard 1 copy 31@0.5x.png";
+import asia3 from "@/assets/img/exterior/asia-lounge/Artboard 1 copy 32@0.5x.png";
 
 const modules = [Autoplay];
 
@@ -34,7 +36,34 @@ const modules = [Autoplay];
           </h2>
         </div>
       </div>
-
+    </swiper-slide>
+    <swiper-slide class="">
+      <div class="h-[70vh] w-full relative">
+        <img :src="asia2" alt="" />
+        <div
+          class="bg-[#00000085] absolute z-10 h-fit w-full top-1/2 -translate-y-1/2 flex flex-col gap-5 justify-center items-center px-[5%] py-[60px]"
+        >
+          <h1 class="text-5xl text-white font-bold">CoffeeX Asia Lounge</h1>
+          <h2 class="text-3xl text-white font-bold">
+            Discover the Richness of Asia in Every Sip
+          </h2>
+        </div>
+      </div>
+    </swiper-slide>
+    <swiper-slide class="">
+      <div class="h-[70vh] w-full relative">
+        <img :src="asia3" alt="" />
+        <div
+          class="bg-[#00000085] absolute z-10 h-fit w-full top-1/2 -translate-y-1/2 flex flex-col gap-5 justify-center items-center px-[5%] py-[60px]"
+        >
+          <h1 class="text-5xl text-white font-bold">CoffeeX Asia Lounge</h1>
+          <h2 class="text-3xl text-white font-bold">
+            Discover the Richness of Asia in Every Sip
+          </h2>
+        </div>
+      </div>
+    </swiper-slide>
+  </swiper>
       <div class="container py-6 text-lg">
         <p class="text-3xl font-semibold py-3">CoffeeX Asia Lounge</p>
         <p>
@@ -74,7 +103,7 @@ const modules = [Autoplay];
           </ul>
         </p>
       </div>
-    </swiper-slide>
+    
      
       
       
@@ -100,7 +129,7 @@ const modules = [Autoplay];
           <p>{{ item.description }}</p>
         </div>
       </swiper-slide> -->
-    </swiper>
+   
   </div>
 </template>
 

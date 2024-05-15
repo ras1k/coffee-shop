@@ -19,19 +19,13 @@ const registerForm = ref({
   name: "",
   email: "",
   phone: "",
-  role: "Customer",
-  type: "",
-  organization_type: "",
-  organization: "",
+  role: "",
   gender: "",
   password: "",
   password_confirmation: "",
   address: "",
   country: "",
 });
-
-const business_type = ref();
-
 const config = useRuntimeConfig();
 const handleRegister = async () => {
   loginload.value= true
@@ -81,68 +75,8 @@ const handleRegister = async () => {
     }
   }
   console.log(registerForm.value, "registerForm.value");
-  loginload.value= false
+  loginload.value= true
 };
-
-const businessType = ref([
-  {
-    name: 'Consumer Goods & Products',
-    sub: [
-      'Consumer Goods Rental',
-      'Fitness and Recreation Centers',
-      'Hotels and Accommodation',
-      'Laundry Services',
-      'Miscellaneous Personal Services',
-      'Personal Care Services',
-      'Photofinishing',
-      'Residential Real Estate Leasing',
-      'Travel and Reservation Services'
-    ]
-  },
-  {
-    name: 'Education Sector',
-    sub: [
-      'University',
-      'College',
-      'School',
-      'Private University/College',
-      'Private School',
-      'Education Board',
-      'Academy',
-      'Institute',
-      'Vocational & Training Institute',
-      'New Construction',
-      'Flight Training School',
-      'Child Day Care Services',
-      'Professional & Management Training'
-    ]
-  },
-  {
-    name: 'Entertainment, Leisure and Hospitality',
-    sub: [
-      'Hotel -All',
-      'NewConstruction',
-      'Restaurant -All',
-      'ETL'
-    ]
-  },
-  {
-    name: 'Small Business',
-    sub: [
-      'Restaurant',
-      'Gas Station',
-      'Grocery',
-      'Auto',
-      'Electronics',
-      'Gym',
-      'Retail',
-      'New Construction',
-      'Grocery Stores'
-    ]
-  }
-
-
-])
 
 // const loginUser = async () => {
 //   if (registerForm.value.email !== "" && registerForm.value.password !== "") {
@@ -242,37 +176,11 @@ const businessType = ref([
                 Type</label
               >
               <select
-                v-model="registerForm.type"
+                v-model="registerForm.role"
                 class="form-input mt-1 block w-full rounded-md p-2 focus:outline-none text-[#1A2647] text-lg"
               >
-                <option value="Individual">Individual</option>
-                <option value="Organization">Organization</option>
-              </select>
-            </div>
-          </div>
-          <div v-if="registerForm.type == 'Organization' " class="lg:flex items-center gap-5 mt-2">
-            <div class="mb-4 lg:w-1/2">
-              <label for="name"  class="block font-semibold text-white text-xl">
-                Industry</label
-              >
-              <select
-                v-model="business_type"
-                class="form-input mt-1 block w-full rounded-md p-2 focus:outline-none text-[#1A2647] text-lg"
-              >
-              
-                <option :value="business" v-for="business in businessType" >{{business.name}}</option>
-              </select>
-            </div>
-            <!-- {{ business_type }} -->
-            <div class="mb-4 lg:w-1/2">
-              <label for="name" class="block font-semibold text-white text-xl">
-                Sub Industry</label
-              >
-              <select
-                v-model="registerForm.organization"
-                class="form-input mt-1 block w-full rounded-md p-2 focus:outline-none text-[#1A2647] text-lg"
-              >
-                <option v-for="sub in business_type?.sub" :value="sub">{{sub}}</option>
+                <option value="Customer">Individual</option>
+                <option value="investor">Organization</option>
               </select>
             </div>
           </div>

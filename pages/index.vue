@@ -12,7 +12,7 @@ const nuxtApp = useNuxtApp();
 </script>
 
 <template>
-  <div>
+  <div class="">
     <HomePageHero />
     <HomePageAboutUs/>
     <homePageHomeMenu/>
@@ -20,6 +20,7 @@ const nuxtApp = useNuxtApp();
     <HomePageTopSellingProduct />
     <HomePageSpecialOffer />
     <HomePageWhyChooseUs />
+    <HomePageFindUs />
     <!-- <HomePageOverview /> -->
   </div>
 </template>

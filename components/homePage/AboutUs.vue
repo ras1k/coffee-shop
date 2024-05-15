@@ -2,7 +2,7 @@
 import premium1 from "@/assets/img/common/about.png";
 </script>
 <template>
-  <div class="bg-gray-200">
+  <div class="bg-gray-100">
     <div class="container py-10 sm:py-10">
       <h2 class="text-4xl text-center font-bold py-5 text-[#6F4E37]">
         About CoffeeX

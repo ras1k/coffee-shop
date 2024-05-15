@@ -91,7 +91,7 @@ onMounted(async () => {
 
 <template>
   <div
-    class="bg-gray-100 min-h-screen flex justify-center items-center pt-10 flex-col px-[15%]"
+    class="bg-gray-200 min-h-screen flex justify-center items-center flex-col px-[15%]"
   >
   <BaseLoader v-if="loaderCalls == true" />
     <h2 class="text-4xl font-semibold mb-6 text-center text-gray-800">

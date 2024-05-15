@@ -761,6 +761,15 @@ const dynamicDashboardRoleData = [
       },
       {
         id: 3,
+        name: "Recurring Orders",
+        url: "/dashboard/view-user-orders",
+        iconHtml: `<fa
+              class="transition-all duration-300 text-md text-white ease-in-out"
+              :icon="['fa-solid', 'address-card']"
+            />`,
+      },
+      {
+        id: 4,
         name: "Payment History",
         url: "/dashboard/manage-customer-feedback",
         iconHtml: `<fa
@@ -769,7 +778,7 @@ const dynamicDashboardRoleData = [
             />`,
       },
       {
-        id: 4,
+        id: 5,
         name: "Manage Payment Method",
         url: "/dashboard/handle-customer",
         iconHtml: `<fa
