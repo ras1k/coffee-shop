@@ -152,7 +152,7 @@ onMounted(() => {
           </div>
           <div class="grid lg:grid-cols-3 2xl:grid-cols-4 gap-5">
             <div v-for="i in selectedMenu.product">
-              <Products :product="i" />
+              <Product :product="i" />
             </div>
           </div>
         </div>
@@ -164,7 +164,7 @@ onMounted(() => {
             </div>
             <div class="grid lg:grid-cols-3 2xl:grid-cols-4 gap-5">
               <div v-for="i in item.product">
-                <Products :product="i" />
+                <Product :product="i" />
               </div>
             </div>
           </div>

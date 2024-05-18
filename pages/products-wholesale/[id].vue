@@ -9,9 +9,8 @@ import { Plus, Minus, Star, Axis3DIcon } from "lucide-vue-next";
 const store = useProductsStore();
 const route = useRoute();
 const config = useRuntimeConfig();
-const selectedOrderType = ref(null);
+const selectedOrderType = ref("Whole Sale"); // default to Whole Sale
 const selectedType = ref(null);
-// const selectedSaleType = ref("Retail");
 const selectedRoast = ref(null);
 const selectedPackSize = ref(null);
 
@@ -29,34 +28,21 @@ const roasts = ref([]);
 const price = ref([]);
 const quantity = ref([]);
 
-const getProductDetails = async (id) => {
+const getProductDetails = async () => {
   const data = await useApi("/product_detail/" + route.params.id);
-  product_detail.value = data;
-  data.image.map((e) => {
-    // if (
-    //   selectedOrderType.value = null &&
-    //   selectedType.value == null &&
-    //   selectedRoast.value == null &&
-    //   selectedPackSize.value == null &&
-    //   e.product_image != ""
-    // ) {
-    //   console.log(e);
-    //   selectedOrderType.value = e.order_type;
-    //   selectedPackSize.value = e.product_pack_name;
-    //   selectedRoast.value = e.product_roast_title;
-    //   selectedType.value = e.product_type;
-    // }
-    
+
+  const filteredData = data.image.filter(e => e.order_type === "Whole Sale");
+  product_detail.value = { ...data, image: filteredData };
+
+  filteredData.map((e) => {
     if(e.product_image != null){
-      selectedOrderType.value = e.order_type;
-      selectedPackSize.value = e.product_pack_name;
-      selectedRoast.value = e.product_roast_title;
       selectedType.value = e.product_type;
+      selectedRoast.value = e.product_roast_title;
+      selectedPackSize.value = e.product_pack_name;
     }
 
     let checkOrderType = order_types.value.find((f) => f == e.order_type);
-    if(!checkOrderType) 
-    {
+    if(!checkOrderType) {
       order_types.value.push(e.order_type)
     }
 
@@ -84,6 +70,7 @@ const getProductDetails = async (id) => {
       sizes.value.push(e.product_pack_name);
     }
   });
+
   console.log("Get api from product details", data);
 };
 
@@ -114,7 +101,6 @@ const changeOrderType = (order) => {
   selectedOrderType.value = order;
 };
 
-
 const changeType = (type) => {
   selectedRoast.value = type;
 };
@@ -129,7 +115,6 @@ const selectSize = (size) => {
 
 const filteredImages = computed(() => {
   let img = null;
-
   if (product_detail.value)
     img = product_detail.value.image?.find(
       (image) =>
@@ -138,8 +123,6 @@ const filteredImages = computed(() => {
         image.product_roast_title == selectedRoast.value &&
         image.product_pack_name == selectedPackSize.value
     );
-  
-  console.log(not_abailable);
   return img;
 });
 
@@ -149,9 +132,7 @@ onMounted(() => {
 </script>
 
 <template>
-  
   <div class="container py-20">
-    <!-- {{ selectedOrderType }}  {{selectedType}} {{ selectedRoast}}  {{ selectedPackSize }} -->
     <div
       class="flex flex-col md:flex-row justify-center items-center md:items-start p-6 space-y-4 md:space-y-0 md:space-x-6 bg-stone-100 drop-shadow-lg rounded-lg"
     >
@@ -159,16 +140,10 @@ onMounted(() => {
         <div class="w-full h-full mb-2 object-cover">
           <Skeleton v-if="product_detail == null" class="h-[125px] w-[250px] rounded-xl" />
           <img v-else
-            :src="filteredImages?.product_image ? config.public.productImgURL + filteredImages?.product_image :  not_abailable"
+            :src="filteredImages?.product_image ? config.public.productImgURL + filteredImages?.product_image : not_abailable"
             class="h-full w-full rounded-lg border-2 border-yellow-700"
           />
         </div>
-        <!-- {{ product_detail?.image[0].product_roast_title }} -->
-        <!-- <div class="flex overflow-x-scroll gap-2 w-[550px] ">
-        <div v-for="(image, index) in product_detail?.image"  class=" w-36 h-20 rounded-lg">  
-            <img v-if="config.public.productImgURL+image.product_image" :src="config.public.productImgURL+image.product_image" @click="selectedRoast=image.product_roast_title , selectedPackSize= image.product_pack_name" :alt="image.product_roast_title" class="h-full border-2 border-yellow-700 rounded">
-        </div>
-      </div> -->
 
         <swiper
           @swiper="setThumbsSwiper"
@@ -179,24 +154,24 @@ onMounted(() => {
           :modules="modules"
           class="mySwiper"
         >
-          <swiper-slide v-for="(image, index) in product_detail?.image"
-            ><img
+          <swiper-slide v-for="(image, index) in product_detail?.image" :key="index">
+            <img
               v-if="image.product_image"
               :src="config.public.productImgURL + image.product_image"
               @click="
-                  (selectedOrderType = image.order_type),
-                  (selectedType = image.product_type),
-                  (selectedRoast = image.product_roast_title),
-                  (selectedPackSize = image.product_pack_name)
+                (selectedOrderType = image.order_type),
+                (selectedType = image.product_type),
+                (selectedRoast = image.product_roast_title),
+                (selectedPackSize = image.product_pack_name)
               "
               :alt="image.product_roast_title"
-          /></swiper-slide>
+            />
+          </swiper-slide>
         </swiper>
       </div>
 
       <div class="flex-1">
         <h1 class="text-3xl font-bold mb-4">{{ product_detail?.title }}</h1>
-        <!-- <p v-html="product_detail?.short_description" class=""></p> -->
         <div class="flex py-2 font-bold gap-1">
           <Star
             class="w-3 h-3"
@@ -227,15 +202,13 @@ onMounted(() => {
 
         <div class="py-1">
           <div class="flex space-x-4">
-           
-            <label v-for="order_type in order_types"
+            <label v-for="order_type in order_types" :key="order_type"
               :class="{
                 'px-4 py-2 border rounded cursor-pointer': true,
                 'bg-[#6F4E37] text-white': selectedOrderType === order_type,
                 'bg-white text-gray-700': selectedOrderType !== order_type,
               }"
             >
-           
               <input
                 type="radio"
                 name="order_type"
@@ -246,18 +219,13 @@ onMounted(() => {
               />
               {{ order_type }}
             </label>
-
-           </div>
+          </div>
         </div>
 
         <div class="py-4">
-          <label class="block mb-2 text-xl font-semibold" for="packSize"
-            >Product Type:</label
-          >
+          <label class="block mb-2 text-xl font-semibold" for="packSize">Product Type:</label>
           <div class="flex space-x-4">
-            <!-- Grinded -->
-            <label
-              v-for="bean in beans"
+            <label v-for="bean in beans" :key="bean"
               :class="{
                 'px-4 py-2 border rounded cursor-pointer': true,
                 'bg-[#6F4E37] text-white': selectedType === bean,
@@ -274,69 +242,53 @@ onMounted(() => {
               />
               {{ bean }}
             </label>
+          </div>
+        </div>
 
-            <!-- Whole Bean -->
-            <!-- <label
+        <div class="py-4">
+          <label class="block mb-2 text-xl font-semibold" for="packSize">Roast Type:</label>
+          <div class="flex space-x-4">
+            <label v-for="roast in roasts" :key="roast"
               :class="{
                 'px-4 py-2 border rounded cursor-pointer': true,
-                'bg-[#6F4E37] text-white': selectedType === 'Whole Bean',
-                'bg-white text-gray-700': selectedType !== 'Whole Bean',
+                'bg-[#6F4E37] text-white': selectedRoast === roast,
+                'bg-white text-gray-700': selectedRoast !== roast,
               }"
             >
               <input
                 type="radio"
-                name="grind"
-                value="Whole Bean"
-                v-model="selectedType"
+                name="roast"
+                :value="roast"
+                v-model="selectedRoast"
                 class="hidden"
+                @click="changeType(roast)"
               />
-              Whole Bean
-            </label> -->
-          
+              {{ roast }}
+            </label>
           </div>
         </div>
 
-        <label class="block mb-2 text-xl font-semibold" for="packSize"
-          >Select Roast Type:</label
-        >
-        <div class="flex space-x-4 py-2">
-          <label
-            v-for="roast in roasts"
-            :class="{
-              'px-4 py-2 border rounded cursor-pointer': true,
-              'bg-[#6F4E37] text-white': selectedRoast === roast,
-              'bg-white text-gray-700': selectedRoast !== roast,
-            }"
-            @click="changeType(roast)"
-          >
-            <input
-              type="radio"
-              :value="roast"
-              v-model="selectedRoast"
-              class="hidden"
-              name="roast"
-            />
-            {{ roast }}
-          </label>
-        </div>
-
-        <div>
-          <label class="block mb-2 text-xl font-semibold pt-4" for="packSize"
-            >Select Pack Size:</label
-          >
-          <select
-            id="packSize"
-            v-model="selectedPackSize"
-            class="block w-2/5 p-2 border rounded-md bg-white text-gray-700 text-lg font-semibold"
-          >
-            <option
-              v-for="size in sizes"
-              :value="size"
-              class="text-lg font-semibold py-1"
+        <div class="py-4">
+          <label class="block mb-2 text-xl font-semibold" for="packSize">Size:</label>
+          <div class="flex space-x-4">
+            <label v-for="size in sizes" :key="size"
+              :class="{
+                'px-4 py-2 border rounded cursor-pointer': true,
+                'bg-[#6F4E37] text-white': selectedPackSize === size,
+                'bg-white text-gray-700': selectedPackSize !== size,
+              }"
             >
+              <input
+                type="radio"
+                name="size"
+                :value="size"
+                v-model="selectedPackSize"
+                class="hidden"
+                @click="selectSize(size)"
+              />
               {{ size }}
-            </option>
-          </select>
+            </label>
+          </div>
         </div>
 
         <div class="text-2xl text-green-500 font-bold py-6">

@@ -94,7 +94,7 @@ onMounted(() => {
                 
               <ul class="w-[150px] absolute hidden p-2 right-[-120%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item">
                 <li class="shadow-2xl py-1 text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/products" class=" p-2 rounded">Retail</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/products" class="p-2 rounded">Wholesale</nuxt-link></li>
+                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/products-wholesale" class="p-2 rounded">Wholesale</nuxt-link></li>
               </ul>
               </ul>
               <ul class="relative submenu">
