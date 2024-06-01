@@ -143,6 +143,11 @@ onMounted(() => {
                 <th
                   class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
                 >
+                  Order Date
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                >
                   Status
                 </th>
                 <th
@@ -168,6 +173,17 @@ onMounted(() => {
                   </p>
                 </td>
                 <!-- <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">12/01/24</td> -->
+                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <p class="text-gray-900 whitespace-no-wrap">
+                    <!-- {{ item.name }} -->
+                    {{
+                      moment(singleOrder?.item[0]?.created_at).format(
+                        "MMMM D, YYYY"
+                      )
+                    }}
+                    <!-- {{ formattedDate }} -->
+                  </p>
+                </td>
                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                   <p class="text-gray-900 whitespace-no-wrap">
                     <!-- {{ item.name }} -->
@@ -210,7 +226,7 @@ onMounted(() => {
                     class="bg-[#6F4E37] text-white px-5 py-1.5 rounded-xl w-1/2 text-center cursor-pointer"
                   >
                     <Dialog>
-                      <DialogTrigger> View Details </DialogTrigger>
+                      <DialogTrigger>Details </DialogTrigger>
                       <DialogContent class="bg-white">
                         <DialogHeader>
                           <DialogTitle class="py-2">Product Details</DialogTitle>

@@ -13,6 +13,7 @@
     "@pinia/nuxt": "^0.5.1",
     "@stripe/stripe-js": "^3.3.0",
     "@unlok-co/nuxt-stripe": "^3.0.0",
+    "@vueuse/core": "^10.9.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-vue-next": "^0.359.0",

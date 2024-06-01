@@ -68,7 +68,9 @@ const { marketingOffer, marketingPromo } = storeToRefs(
             v-if="singlePromo.isApproved"
             class="grid grid-cols-3 gap-2 justify-between"
           >
-            <td class="p-2 text-left">{{ singlePromo.promo_title }}</td>
+            <td class="p-2 text-left">
+              {{ singlePromo.promo_title }}
+            </td>
             <td class="font-bold p-2 text-center">
               {{ singlePromo.promo_code }}
             </td>

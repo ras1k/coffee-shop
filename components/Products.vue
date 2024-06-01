@@ -17,7 +17,9 @@ const addToCart = (product) => {
 };
 
 const isInCart = computed(() => {
+  if(store.cart)
   return store.cart.find((item) => item.id === product.id)?.quantity;
+else return false
 });
 
 const removeCart = (id) => {

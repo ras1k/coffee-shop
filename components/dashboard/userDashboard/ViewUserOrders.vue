@@ -23,6 +23,34 @@ const getProducts = async () => {
   store.order = data;
 };
 
+// Pagination state
+const currentPage = ref(1)
+const itemsPerPage = ref(5)
+
+// Computed property for paginated data
+const paginatedEmployees = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value
+  const end = start + itemsPerPage.value
+  return store.order.slice(start, end)
+})
+
+// Methods for pagination
+const totalPages = computed(() => Math.ceil(store.order.length / itemsPerPage.value))
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++
+  }
+}
+
+const previousPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--
+  }
+}
+
+
+
 // const sorted_list = computed(() => {
 //   return [...store.order].sort((a,b) => b.value - a.value)
 // })
@@ -43,15 +71,15 @@ onMounted(() => {
           My Orders
         </h2>
       </div>
-      <div class="my-2 flex sm:flex-row flex-col">
-        <div class="flex flex-row mb-1 sm:mb-0">
+      <div class="my-2 flex sm:flex-row flex-col items-center justify-between">
+        <div class="flex flex-row mb-1 gap-5 sm:mb-0">
           <div class="relative">
             <select
-              class="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            v-model="itemsPerPage"
+              class="h-full rounded shadow-lg block appearance-none w-full bg-white text-gray-700 py-2 px-10 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             >
-              <option>5</option>
-              <option>10</option>
-              <option>20</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
             </select>
             <div
               class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
@@ -69,11 +97,11 @@ onMounted(() => {
           </div>
           <div class="relative">
             <select
-              class="h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
+              class="h-full rounded shadow-lg block appearance-none w-full bg-white text-gray-700 py-2 px-10 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             >
               <option>All</option>
-              <option>Active</option>
-              <option>Inactive</option>
+              <option>Pending</option>
+              <option>Confirmed</option>
             </select>
             <div
               class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
@@ -100,7 +128,7 @@ onMounted(() => {
           </span>
           <input
             placeholder="Search"
-            class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+            class="h-full rounded shadow-lg block appearance-none w-full bg-white text-gray-700 py-2 px-10 pr-20 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           />
         </div>
       </div>
@@ -154,7 +182,7 @@ onMounted(() => {
             </thead>
             <tbody>
               <!-- {{ store.order }} -->
-              <tr v-for="(singleOrder, index) in store.order.toSorted()">
+              <tr v-for="(singleOrder, index) in paginatedEmployees">
                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                   <p class="text-gray-900 whitespace-no-wrap">
                     {{ index + 1 }}
@@ -164,7 +192,7 @@ onMounted(() => {
                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                   <p class="text-gray-900 whitespace-no-wrap">
                     <!-- {{ index + 1 }} -->
-                    {{ singleOrder?.order_uid }}
+                    {{ singleOrder?.unique_order_id }}
                   </p>
                 </td>
                 <!-- <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">12/01/24</td> -->
@@ -286,24 +314,30 @@ onMounted(() => {
               </tr>
             </tbody>
           </table>
-          <div
-            class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between"
-          >
-            <span class="text-xs xs:text-sm text-gray-900">
-              Showing 1 to 4 of 50 Entries
-            </span>
-            <div class="inline-flex mt-2 xs:mt-0">
-              <button
-                class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"
+          <div class="flex justify-center items-center gap-5 mt-1 p-2">
+            <button @click="previousPage" :class="currentPage === 1 ? 'opacity-50' : ''">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="48"
+                height="48"
+                fill="rgba(69,135,206,1)"
               >
-                Prev
-              </button>
-              <button
-                class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r"
+                <path d="M8 12L14 6V18L8 12Z"></path>
+              </svg>
+            </button>
+            <span>Page {{ currentPage }} of {{ totalPages }}</span>
+            <button @click="nextPage" :class="currentPage === totalPages ? 'opacity-50' : ''">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="48"
+                height="48"
+                fill="rgba(69,135,206,1)"
               >
-                Next
-              </button>
-            </div>
+                <path d="M16 12L10 18V6L16 12Z"></path>
+              </svg>
+            </button>
           </div>
         </div>
       </div>

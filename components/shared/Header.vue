@@ -13,10 +13,15 @@ const myFunction = () => {
 const loginCookie = useCookie("loginCookie");
 const tokenCookie = useCookie("tokenCookie");
 const logoutUser = () => {
-  router.push(`/login/${loginCookie.value.loginRole}`);
+  router.push(`/login/user-dashboard`);
   loginCookie.value = "";
   tokenCookie.value = "";
 };
+// const logoutUser = () => {
+//   router.push(`/login/${loginCookie.value.loginRole}`);
+//   loginCookie.value = "";
+//   tokenCookie.value = "";
+// };
 
 const { setRouterHistory } = useHeaderStore()
 const nuxtApp = useNuxtApp()
@@ -56,11 +61,11 @@ onMounted(() => {
     "
   >
     <div
-      class="fixed sm:static w-full flex justify-between items-center gap-5 pt-3 sm:bg-transparent px-[5%] sm:px-0 z-50"
+      class="sticky sm:static w-full flex justify-between items-center gap-5 pt-3 sm:bg-transparent px-[5%] sm:px-0 z-50"
     >
       <nuxt-link to="/" class="text-2xl font-bold">
         <!-- Coffee <span class="text-green-400">Exploration</span> LLC -->
-        <img src="@/assets/img/common/logo.png" alt="" class="h-40 transition ease-out hover:scale-90" />
+        <img src="@/assets/img/common/logo.png" alt="" class="h-32 " />
       </nuxt-link>
       <div
         class="absolute sm:static mt-[55px] sm:mt-0 w-full sm:w-fit z-40 sm:bg-transparent flex flex-col sm:flex-row gap-5 items-center font-bold text-md justify-center duration-200 "
@@ -381,7 +386,7 @@ onMounted(() => {
           </div>
         </div>
 
-        <div @click="placeOrder()" class="flex items-center bg-white p-1 rounded-lg cursor-pointer font-bold gap-5">
+        <div @click="placeOrder()" class="flex items-center  p-1 rounded-lg cursor-pointer font-bold gap-5">
           <div
           
             class="relative"

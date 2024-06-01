@@ -1,15 +1,17 @@
 <script setup>
-import { ref } from 'vue'
+import { loadStripe } from '@stripe/stripe-js'
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 const nuxtApp = useNuxtApp()
 // const config = useRuntimeConfig()
 
 // config.public.apiUrl
 const loaderCalls = ref(false)
 const store = useProductsStore()
-const authStore = useAuthStore();
+const authStore = useAuthStore()
 const userCookie = useCookie('userCookie')
-const user = authStore.user;
-console.log(user);
+const user = authStore.user
+console.log(user)
 
 const formData = ref({
   user_id: authStore.user?.id,
@@ -25,17 +27,12 @@ const formData = ref({
   card_cvc: '',
   product: [],
 
-  session_token:'',
-  success_token:'',
+  session_token: '',
 
-
+  success_token: '',
 })
 
-
-console.log(userCookie.value);
-import { onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import { loadStripe } from '@stripe/stripe-js'
+console.log(userCookie.value)
 
 const stripe = await loadStripe(
   'pk_test_51O1nZWKGnxnRW2FleKUVO7ehputq4YhMzBXIgBk9qaku5gzZGAvTQmjhN18YSHIXSjXhVgndcos35WIVhDPxmim000RQoO42wT'
@@ -44,7 +41,7 @@ const stripe = await loadStripe(
 const route = useRoute()
 const total = computed(() => {
   let t = 0
-  store.cart.map((e) => (t += e.price * e.quantity))
+  store.cart.map((e) => (t += e?.product_price * e?.product_qty))
   return t
 })
 const allMenu = () => {
@@ -58,23 +55,17 @@ const checkout = async () => {
   loaderCalls.value = true
   try {
     store.cart.map((e) => {
-    let prod = {
-      product_id: e.id,
-      product_price: e.price,
-      product_title: e.title,
-      product_qty: e.quantity
-    }
-    formData.value.product.push(prod)
-  })
+      formData.value.product.push(e)
+    })
     const response = await $fetch('/api/stripe/create', {
       method: 'POST',
       body: {
-        amount: total.value,
-        email: user.email,
+        amount: total?.value,
+        email: user?.email,
       },
     })
     const { sessionId } = response
-   formData.value.session_id = response.sessionId
+    formData.value.session_id = response.sessionId
     store.orderdata = formData.value
     await stripe.redirectToCheckout({ sessionId })
     loaderCalls.value = false
@@ -84,22 +75,20 @@ const checkout = async () => {
   }
 }
 
-onMounted(async () => {
- 
-})
+onMounted(async () => {})
 </script>
 
 <template>
   <div
     class="bg-gray-200 min-h-screen flex justify-center items-center flex-col px-[15%]"
   >
-  <BaseLoader v-if="loaderCalls == true" />
+    <BaseLoader v-if="loaderCalls == true" />
     <h2 class="text-4xl font-semibold mb-6 text-center text-gray-800">
       Checkout
     </h2>
-    <div class="bg-white shadow-lg  rounded-lg p-8 w-full flex gap-10">
-      <div class="w-1/4 ">
-        <div class="py-5 ">
+    <div class="bg-white shadow-lg rounded-lg p-8 w-full flex gap-10">
+      <div class="w-1/4">
+        <div class="py-5">
           <div class="bg-white rounded-xl drop-shadow-lg p-3 mb-3">
             <div
               class="pb-2 flex items-center gap-2 text-green-600 text-sm font-semibold"
@@ -108,16 +97,16 @@ onMounted(async () => {
               Open Now
             </div>
           </div>
-<!-- {{ user }} -->
+
           <div class="bg-white rounded-xl drop-shadow-lg p-3 mb-3">
             <h1 class="text-xl font-semibold pb-2 border-b">Your Order</h1>
             <div
               v-for="item in store.cart"
               class="py-2 flex justify-between gap-2 text-sm font-semibold border-b"
             >
-              <p>{{ item.quantity }} x {{ item.title }}</p>
+              <p>{{ item.product_qty }} x {{ item.product_title }}</p>
               <div class="flex flex-col gap-1">
-                <p>$ {{ item.price * item.quantity }}</p>
+                <p>$ {{ item.product_price * item.product_qty }}</p>
                 <div class="flex border p-1 rounded-md bg-white drop-shadow-md">
                   <div class="border-r" @click="store.increaseCart(item.id)">
                     <svg
@@ -133,7 +122,7 @@ onMounted(async () => {
                     </svg>
                   </div>
                   <div
-                    v-if="item.quantity > 1"
+                    v-if="item?.product_qty > 1"
                     @click="store.decresecart(item.id)"
                   >
                     <svg
@@ -172,7 +161,6 @@ onMounted(async () => {
               <p>Total</p>
               <p>$ {{ total }}</p>
             </div>
-           
           </div>
         </div>
       </div>
@@ -180,14 +168,14 @@ onMounted(async () => {
         <div class="mb-6">
           <label
             for="name"
-            class="block text-sm font-semibold  text-gray-800 mb-2"
+            class="block text-sm font-semibold text-gray-800 mb-2"
             >Name</label
           >
           <input
             type="text"
             id="name"
             v-model="formData.name"
-            class="input-field "
+            class="input-field"
             placeholder="John Doe"
             disabled
           />
@@ -196,7 +184,6 @@ onMounted(async () => {
           <label
             for="email"
             class="block text-sm font-semibold text-gray-800 mb-2"
-            
             >Email</label
           >
           <input
@@ -204,7 +191,6 @@ onMounted(async () => {
             id="email"
             v-model="formData.email"
             class="input-field"
-            
             placeholder="example@example.com"
             disabled
           />
@@ -212,7 +198,6 @@ onMounted(async () => {
         <div class="mb-6">
           <label
             for="address"
-            
             class="block text-sm font-semibold text-gray-800 mb-2"
             >Shipping Address 1</label
           >
@@ -239,14 +224,16 @@ onMounted(async () => {
             placeholder="123 Main St, City, Country"
           ></textarea>
         </div>
-      
+
         <div class="flex justify-center">
-       
-         
-          <button v-if="store.cart.length > 0" class="px-10 w-1/3 py-2 text-center rounded-full shadow-md bg-[#683615] hover:bg-black transition ease-out hover:scale-105  font-semibold text-white">Proceed to Checkout</button>
+          <button
+            v-if="store.cart.length > 0"
+            class="px-10 w-1/3 py-2 text-center rounded-full shadow-md bg-[#683615] hover:bg-black transition ease-out hover:scale-105 font-semibold text-white"
+          >
+            Proceed to Checkout
+          </button>
         </div>
       </form>
-    
     </div>
   </div>
 </template>

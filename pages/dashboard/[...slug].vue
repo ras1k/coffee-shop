@@ -36,6 +36,12 @@ onMounted(() => {
   } else {
     currentTab.value = "Profile";
   }
+
+  if (loginCookie.value.type == 'Individual' )
+  {
+    dynamicDashboardRole.value[5].dashboardMenu.splice(2,1)
+  }
+  
 });
 </script>
 <template>
@@ -44,6 +50,9 @@ onMounted(() => {
     <div
       class="flex lg:flex-row flex-col min-h-screen w-full bg-[#6F4E37] text-lg font-semibold mt-5 rounded-r-lg"
     >
+    <!-- {{ currentTab }} -->
+  <!-- {{ userCookie }} -->
+     <!--  {{ loginCookie }} -->
       <div class="lg:w-[30%] h-full w-[40%] p-5 text-white">
         <ul class="text-xl">
           <li class="" @click="currentTab = 'Profile'">
@@ -59,6 +68,7 @@ onMounted(() => {
             v-for="currentDashboard in dynamicDashboardRole"
             :key="currentDashboard.id"
           > 
+         
             <template
               v-if="
                 currentDashboard.name ===
@@ -432,6 +442,9 @@ onMounted(() => {
         />
         <DashboardUserDashboardRecurringOrders
           v-if="currentTab.includes('Recurring Orders')"
+        />
+        <DashboardUserDashboardApplyForSample
+          v-if="currentTab.includes('Apply For Sample')"
         />
         <DashboardUserDashboardPaymentHistory
           v-if="currentTab.includes('Payment History')"

@@ -5,16 +5,17 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-// import { useHeaderStore } from "@/stores/header";
-const headerStore = useHeaderStore()
-const loginload = ref(false)
 
-//brother
+// Header store usage
+const headerStore = useHeaderStore()
+
+const loginload = ref(false)
 const { setRouterHistory } = useHeaderStore()
 const loginCookie = useCookie('loginCookie')
 const tokenCookie = useCookie('tokenCookie')
 const router = useRouter()
 const nuxtApp = useNuxtApp()
+
 const placeOrder = () => {
   loginload.value = true
   if (loginCookie.value && loginCookie.value.email) {
@@ -33,25 +34,36 @@ const placeOrder = () => {
 
 const store = useProductsStore()
 const modules = [Autoplay, Pagination, Navigation]
+
 const getProducts = async () => {
   const data = await $fetch('api/products/get_products')
   console.log(data, 'from products page')
 
   store.product = data
-  data.map((e)=>store.allProduct.push(...e.product))
-  
+  data.map((e) => store.allProduct.push(...e.product))
 }
 
-const menu = computed(() => {
-  return store.product
+const menu = computed(() => store.product)
+const selectedMenu = ref('')
+const searchQuery = ref('')
+
+const filteredMenu = computed(() => {
+  if (!searchQuery.value) return menu.value
+  return menu.value.filter(item =>
+    item.type_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    item.product.some(product =>
+      product.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+    )
+  )
 })
 
-const selectedMenu = ref('')
-const menuSelect = (id) => {
-  selectedMenu.value = menu.find((item) => item.shop_type_id == id)
+const clearSearch = () => {
+  searchQuery.value = ''
 }
 
-const route = useRoute()
+const menuSelect = (id) => {
+  selectedMenu.value = menu.value.find((item) => item.shop_type_id == id)
+}
 
 const allMenu = () => {
   selectedMenu.value = ''
@@ -65,51 +77,43 @@ const currentSelectedMenuItem = ref('')
 
 const total = computed(() => {
   let t = 0
-  store.cart.map((e) => (t += e.price * e.quantity))
+  if(store.cart)
+  store?.cart?.map((e) => (t += e.price * e.quantity))
   return t
 })
 
 watch(
-  () => selectedMenu.value.item,
+  () => selectedMenu.value?.item,
   () => {
     currentSelectedMenuItem.value = ''
     setTimeout(() => {
-      currentSelectedMenuItem.value = selectedMenu.value.item
+      currentSelectedMenuItem.value = selectedMenu.value?.item
     }, 100)
-    console.log(selectedMenu.value.item, 'from watch')
+    console.log(selectedMenu.value?.item, 'from watch')
   }
 )
-
-// watch(route.query.menu, () => {
-//   getProducts()
-//   if (route.query.menu) {
-//     selectedMenu.value = menu.find((e) => e.slug == route.query.menu)
-//   }
-// })
 
 onMounted(() => {
   getProducts()
 })
 </script>
 
+
 <template>
   <div class="mx-auto">
-    <div
-      class="h-[40svh] bg-[url('/assets/img/home/hero/coffee2.jpg')] bg-cover"
-    >
-      <div
-        class="w-full h-full bg-[#00000067] flex justify-center items-center text-white text-6xl font-semibold"
-      >
+    <div class="h-[40svh] bg-[url('/assets/img/home/hero/coffee2.jpg')] bg-cover">
+      <div class="w-full h-full bg-[#00000067] flex justify-center items-center text-white text-6xl font-semibold">
         <BaseHeaderTitle />
       </div>
     </div>
     <!-- {{ menu }} -->
+    <ClientOnly>
     <div class="px-[10%] flex flex-col-reverse md:flex-row gap-5 pb-5">
       <div class="md:w-3/4">
-        <div class="rounded-b-lg sticky top-[80px] mb-3 z-10 px-1 py-5">
+        <div class="rounded-b-lg sticky top-[80px] mb-3 z-10 px-1 py-5 backdrop-blur-3xl">
           <div class="bg-white border p-2 rounded-full drop-shadow-md">
             <swiper
-              :slides-per-view="3.5"
+              :slides-per-view="3"
               :space-between="10"
               :loop="true"
               :pagination="{ clickable: true }"
@@ -129,14 +133,13 @@ onMounted(() => {
               </swiper-slide>
 
               <swiper-slide
-                v-for="item in menu"
+                v-for="item in filteredMenu"
+                :key="item.id"
                 class="text-white transition ease-out hover:scale-95 bg-yellow-900 p-1 rounded-2xl"
               >
                 <p
                   class="font-semibold h-full w-full px-1 py-1.5 rounded-2xl flex items-center justify-center cursor-pointer"
-                  :class="
-                    selectedMenu == item ? 'bg-yellow-950' : 'bg-yellow-900'
-                  "
+                  :class="selectedMenu == item ? 'bg-yellow-950' : 'bg-yellow-900'"
                   @click="selectedMenu = item"
                 >
                   {{ item.type_name }}
@@ -151,19 +154,19 @@ onMounted(() => {
             <h1 class="text-3xl font-semibold">{{ selectedMenu.type_name }}</h1>
           </div>
           <div class="grid lg:grid-cols-3 2xl:grid-cols-4 gap-5">
-            <div v-for="i in selectedMenu.product">
+            <div v-for="i in selectedMenu.product" :key="i.id">
               <Products :product="i" />
             </div>
           </div>
         </div>
 
         <div v-else class="px-5">
-          <div v-for="item in menu" class="pb-5 px-5">
+          <div v-for="item in filteredMenu" :key="item.id" class="pb-5 px-5">
             <div class="pb-2 border-b-2 border-b-gray-400 mb-2">
               <h1 class="text-3xl font-semibold">{{ item.type_name }}</h1>
             </div>
             <div class="grid lg:grid-cols-3 2xl:grid-cols-4 gap-5">
-              <div v-for="i in item.product">
+              <div v-for="i in item.product" :key="i.id">
                 <Products :product="i" />
               </div>
             </div>
@@ -174,22 +177,36 @@ onMounted(() => {
       <div class="md:w-1/4">
         <div class="sticky top-[80px] z-10 py-5">
           <div class="bg-white rounded-xl drop-shadow-md p-3 mb-3">
-            <div
-              class="pb-2 flex items-center gap-2 text-green-600 text-sm font-semibold"
-            >
+            <div class="pb-2 flex items-center gap-2 text-green-600 text-sm font-semibold">
               <p class="h-3 w-3 rounded-full bg-green-600"></p>
               Open Now
             </div>
           </div>
 
-          <div
-            class="bg-white flex items-center flex-col gap-4 justify-between rounded-xl drop-shadow-md p-3 mb-3"
-          >
-            <input
-              type="text"
-              class="text-black text-lg font-semibold px-1 w-full rounded-lg py-1.5 bg-[#6f4e372c] focus:outline-none"
-            />
-            <button for="email" class="btn px-2 py-1.5 w-full font-semibold">
+          <div class="bg-white flex items-center flex-col gap-4 justify-between rounded-xl drop-shadow-md p-3 mb-3">
+            <div class="relative w-full rounded-lg flex items-center">
+              <span class="bg-[#6f4e372c] py-3 px-2 rounded-s-lg ">
+                <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
+                  <path
+                    d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z"
+                  ></path>
+                </svg>
+              </span>
+              <input
+                type="text"
+                placeholder="Search"
+                v-model="searchQuery"
+                class="text-black text-lg font-semibold px-2 w-full rounded-e-lg bg-[#6f4e372c]  py-1.5  focus:outline-none"
+              />
+              <button
+                v-if="searchQuery"
+                @click="clearSearch"
+                class="absolute right-2 top-1/2 transform -translate-y-1/2 text-black"
+              >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="rgba(0,0,0,1)"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path></svg>
+              </button>
+            </div>
+            <button class="btn px-2 py-1.5 w-full font-semibold">
               Search
             </button>
           </div>
@@ -205,6 +222,7 @@ onMounted(() => {
             </h1>
             <div
               v-for="item in store.cart"
+              :key="item.id"
               class="py-2 flex justify-between gap-2 text-sm font-semibold border-b"
             >
               <p>{{ item.quantity }} x {{ item.title }}</p>
@@ -291,8 +309,10 @@ onMounted(() => {
         </div>
       </div>
     </div>
+    </ClientOnly>
   </div>
 </template>
+
 
 <style scoped>
 .swiper {

@@ -1,134 +1,160 @@
 <script setup>
 import not_abailable from '@/assets/img/coffeebag/not-available.jpg'
-import "swiper/css";
-import "swiper/css/navigation";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-import { Plus, Minus, Star, Axis3DIcon } from "lucide-vue-next";
+import { Input } from '@/components/ui/input'
+import { Minus, Plus, Star } from 'lucide-vue-next'
+import { storeToRefs } from 'pinia'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { useHeaderStore } from '~/stores/header'
 
-const store = useProductsStore();
-const route = useRoute();
-const config = useRuntimeConfig();
-const selectedOrderType = ref(null);
-const selectedType = ref(null);
+// pinia
+const { routerHistory } = storeToRefs(useHeaderStore())
+const { setRouterHistory } = useHeaderStore()
+const loginCookie = useCookie('loginCookie')
+const tokenCookie = useCookie('tokenCookie')
+const nuxtApp = useNuxtApp()
+const router = useRouter()
+
+const store = useProductsStore()
+const route = useRoute()
+const config = useRuntimeConfig()
+const selectedOrderType = ref(null)
+const selectedType = ref(null)
 // const selectedSaleType = ref("Retail");
-const selectedRoast = ref(null);
-const selectedPackSize = ref(null);
+const selectedRoast = ref(null)
+const selectedPackSize = ref(null)
 
 const product = computed(() => {
-  let prod = null;
-  prod = store.allProduct.find((e) => e.id == route.params.id);
-  return prod;
-});
+  let prod = null
+  prod = store.allProduct.find((e) => e.id == route.params.id)
+  return prod
+})
 
-const product_detail = ref();
+const product_detail = ref()
 const order_types = ref([])
-const sizes = ref([]);
-const beans = ref([]);
-const roasts = ref([]);
-const price = ref([]);
-const quantity = ref([]);
+const sizes = ref([])
+const beans = ref([])
+const roasts = ref([])
+const price = ref([])
+const quantity = ref([])
+
+const placeOrder = () => {
+  if (loginCookie.value && loginCookie.value.email) {
+    router.push(routerHistory.value)
+    setRouterHistory('/products/' + route.params.id)
+  } else {
+    setRouterHistory('/products/' + route.params.id)
+    nuxtApp.$toast('clear')
+    nuxtApp.$toast('success', {
+      message: 'Please login first!',
+      className: 'alert_error',
+    })
+    router.push('/login/user-dashboard')
+  }
+}
 
 const getProductDetails = async (id) => {
-  const data = await useApi("/product_detail/" + route.params.id);
-  product_detail.value = data;
+  const data = await useApi('/product_detail/' + route.params.id)
+  product_detail.value = data
+  product_detail.value.id = route.params.id
   data.image.map((e) => {
-    // if (
-    //   selectedOrderType.value = null &&
-    //   selectedType.value == null &&
-    //   selectedRoast.value == null &&
-    //   selectedPackSize.value == null &&
-    //   e.product_image != ""
-    // ) {
-    //   console.log(e);
-    //   selectedOrderType.value = e.order_type;
-    //   selectedPackSize.value = e.product_pack_name;
-    //   selectedRoast.value = e.product_roast_title;
-    //   selectedType.value = e.product_type;
-    // }
-    
-    if(e.product_image != null){
-      selectedOrderType.value = e.order_type;
-      selectedPackSize.value = e.product_pack_name;
-      selectedRoast.value = e.product_roast_title;
-      selectedType.value = e.product_type;
+    if (e.product_image != null) {
+      selectedOrderType.value = e.order_type
+      selectedPackSize.value = e.product_pack_name
+      selectedRoast.value = e.product_roast_title
+      selectedType.value = e.product_type
     }
 
-    let checkOrderType = order_types.value.find((f) => f == e.order_type);
-    if(!checkOrderType) 
-    {
+    let checkOrderType = order_types.value.find((f) => f == e.order_type)
+    if (!checkOrderType) {
       order_types.value.push(e.order_type)
     }
 
-    let checkPrice = price.value.find((f) => f == e.product_price);
+    let checkPrice = price.value.find((f) => f == e.product_price)
     if (!checkPrice) {
-      price.value.push(e.product_price);
+      price.value.push(e.product_price)
     }
 
-    let checkQuantity = quantity.value.find((f) => e.quantity);
+    let checkQuantity = quantity.value.find((f) => e.quantity)
     if (!checkQuantity) {
-      quantity.value.push(e.quantity);
+      quantity.value.push(e.quantity)
     }
 
-    let checkBean = beans.value.find((f) => f == e.product_type);
+    let checkBean = beans.value.find((f) => f == e.product_type)
     if (!checkBean) {
-      beans.value.push(e.product_type);
+      beans.value.push(e.product_type)
     }
 
-    let checkRoast = roasts.value.find((f) => f == e.product_roast_title);
+    let checkRoast = roasts.value.find((f) => f == e.product_roast_title)
     if (!checkRoast) {
-      roasts.value.push(e.product_roast_title);
+      roasts.value.push(e.product_roast_title)
     }
-    let checkSize = sizes.value.find((f) => f == e.product_pack_name);
+    let checkSize = sizes.value.find((f) => f == e.product_pack_name)
     if (!checkSize) {
-      sizes.value.push(e.product_pack_name);
+      sizes.value.push(e.product_pack_name)
     }
-  });
-  console.log("Get api from product details", data);
-};
+  })
+  console.log('Get api from product details', data)
+}
 
-const imageUrl = config.public.productImgURL + product.image;
+const imageUrl = config.public.productImgURL + product.image
 
-const addToCart = (product) => {
-  store.addToCart({ ...product, quantity: 1 });
-  console.log(store.cart);
-};
+const addToCart = () => {
+ 
+  let prod = {
+    product_id: product_detail.value.id,
+    product_price: filteredImages.value.product_price,
+    product_title: product_detail.value.title,
+    product_qty: 1,
+    occurance_type: occurrence.value.type,
+    recurrance_value: occurrence.value.value,
+    product_image_id: filteredImages.value.product_image_id,
+  }
+ console.log(prod);
+  store.addToCart(prod)
+}
 
 const isInCart = computed(() => {
-  return store.cart.find((item) => item.id == product.value.id)?.quantity;
+  if (store && store.cart && Array.isArray(store.cart)) {
+    const item = store.cart.find((item) => item?.product_id == product_detail?.value?.id);
+    if (item) {
+      return item.product_qty;
+    }
+  }
+  return false;
 });
-
 const removeCart = (id) => {
-  store.removeFromCart(id);
-};
+  store.removeFromCart(id)
+}
 
-const thumbsSwiper = ref(null);
+const thumbsSwiper = ref(null)
 
 const setThumbsSwiper = (swiper) => {
-  thumbsSwiper.value = swiper;
-};
+  thumbsSwiper.value = swiper
+}
 
-const modules = [FreeMode, Navigation, Thumbs];
+const modules = [FreeMode, Navigation, Thumbs]
 
 const changeOrderType = (order) => {
-  selectedOrderType.value = order;
-};
-
+  selectedOrderType.value = order
+}
 
 const changeType = (type) => {
-  selectedRoast.value = type;
-};
+  selectedRoast.value = type
+}
 
 const changeBean = (bean) => {
-  selectedType.value = bean;
-};
+  selectedType.value = bean
+}
 
 const selectSize = (size) => {
-  selectedPackSize.value = size;
-};
+  selectedPackSize.value = size
+}
 
 const filteredImages = computed(() => {
-  let img = null;
+  let img = null
 
   if (product_detail.value)
     img = product_detail.value.image?.find(
@@ -137,29 +163,49 @@ const filteredImages = computed(() => {
         image.product_type == selectedType.value &&
         image.product_roast_title == selectedRoast.value &&
         image.product_pack_name == selectedPackSize.value
-    );
-  
-  console.log(not_abailable);
-  return img;
-});
+    )
+
+  console.log(not_abailable)
+  return img
+})
+
+const occurrence = ref({
+  type: 'single',
+  value: 'Weeks',
+})
+
+const modalOpen = ref(false)
+
+const EventForm = ref({
+  occurrence_type: '',
+})
 
 onMounted(() => {
-  getProductDetails();
-});
+  getProductDetails()
+})
 </script>
 
 <template>
-  
   <div class="container py-20">
     <!-- {{ selectedOrderType }}  {{selectedType}} {{ selectedRoast}}  {{ selectedPackSize }} -->
+
     <div
       class="flex flex-col md:flex-row justify-center items-center md:items-start p-6 space-y-4 md:space-y-0 md:space-x-6 bg-stone-100 drop-shadow-lg rounded-lg"
     >
       <div class="w-1/2 h-[450px] flex-1">
         <div class="w-full h-full mb-2 object-cover">
-          <Skeleton v-if="product_detail == null" class="h-[125px] w-[250px] rounded-xl" />
-          <img v-else
-            :src="filteredImages?.product_image ? config.public.productImgURL + filteredImages?.product_image :  not_abailable"
+          <!-- {{ product_detail?.image }} -->
+          <Skeleton
+            v-if="product_detail == null"
+            class="h-[125px] w-[250px] rounded-xl"
+          />
+          <img
+            v-else
+            :src="
+              filteredImages?.product_image
+                ? config.public.productImgURL + filteredImages?.product_image
+                : not_abailable
+            "
             class="h-full w-full rounded-lg border-2 border-yellow-700"
           />
         </div>
@@ -184,7 +230,7 @@ onMounted(() => {
               v-if="image.product_image"
               :src="config.public.productImgURL + image.product_image"
               @click="
-                  (selectedOrderType = image.order_type),
+                ;(selectedOrderType = image.order_type),
                   (selectedType = image.product_type),
                   (selectedRoast = image.product_roast_title),
                   (selectedPackSize = image.product_pack_name)
@@ -225,34 +271,91 @@ onMounted(() => {
           />
         </div>
 
-        <div class="py-1">
-          <div class="flex space-x-4">
-           
-            <label v-for="order_type in order_types"
-              :class="{
-                'px-4 py-2 border rounded cursor-pointer': true,
-                'bg-[#6F4E37] text-white': selectedOrderType === order_type,
-                'bg-white text-gray-700': selectedOrderType !== order_type,
-              }"
-            >
-           
-              <input
-                type="radio"
-                name="order_type"
-                :value="order_type"
-                v-model="selectedOrderType"
-                class="hidden"
-                @click="changeOrderType(order_type)"
-              />
-              {{ order_type }}
-            </label>
+        <div class="">
+          <div class="py-1">
+            <div class="flex space-x-4">
+              <label
+                v-for="order_type in order_types"
+                :class="{
+                  'px-4 py-2 border rounded cursor-pointer': true,
+                  'bg-[#6F4E37] text-white': selectedOrderType === order_type,
+                  'bg-white text-gray-700': selectedOrderType !== order_type,
+                }"
+              >
+                <input
+                  type="radio"
+                  name="order_type"
+                  :value="order_type"
+                  v-model="selectedOrderType"
+                  class="hidden"
+                  @click="changeOrderType(order_type)"
+                />
+                {{ order_type }}
+              </label>
+            </div>
+          </div>
+          <!-- {{ occurrence }} -->
 
-           </div>
+          <div v-if="selectedOrderType === 'Whole Sale'" class="mt-2">
+            <div class="relative mb-3">
+              <div class="flex flex-col gap-2">
+                <p class="text-lg font-semibold py-1">
+                  Occurrence Type <span class="text-red-600">*</span>
+                </p>
+                <div class="flex gap-2 items-center">
+                  <div class="flex gap-2 items-center">
+                    <div class="flex">
+                      <input
+                        type="radio"
+                        name=""
+                        id=""
+                        value="single"
+                        v-model="occurrence.type"
+                      />
+                      <label for="" class="font-semibold mx-2">Single</label>
+                    </div>
+                    <div>
+                      <div>
+                        <input
+                          type="radio"
+                          value="recurrence"
+                          v-model="occurrence.type"
+                          @click="placeOrder()"
+                          id="toggleModal"
+                        />
+                        <label for="recurrence" class="font-semibold mx-2"
+                          >Recurrence</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <Select
+                  v-if="occurrence.type === 'recurrence'"
+                  v-model="occurrence.value"
+                  class="w-full"
+                >
+                  <SelectTrigger class="w-[30%]">
+                    <SelectValue placeholder="Recurrence Pattern" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup class="bg-white">
+                      <SelectLabel>Recurrence Pattern</SelectLabel>
+                      <SelectItem value="Days"> Daily </SelectItem>
+                      <SelectItem value="Weeks"> Weekly </SelectItem>
+                      <SelectItem value="Months"> Monthly </SelectItem>
+                      <SelectItem value="Years"> Yearly </SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="py-4">
           <label class="block mb-2 text-xl font-semibold" for="packSize"
-            >Product Type:</label
+            >Product Type <span class="text-red-600">*</span></label
           >
           <div class="flex space-x-4">
             <!-- Grinded -->
@@ -292,37 +395,38 @@ onMounted(() => {
               />
               Whole Bean
             </label> -->
-          
           </div>
         </div>
 
-        <label class="block mb-2 text-xl font-semibold" for="packSize"
-          >Select Roast Type:</label
-        >
-        <div class="flex space-x-4 py-2">
-          <label
-            v-for="roast in roasts"
-            :class="{
-              'px-4 py-2 border rounded cursor-pointer': true,
-              'bg-[#6F4E37] text-white': selectedRoast === roast,
-              'bg-white text-gray-700': selectedRoast !== roast,
-            }"
-            @click="changeType(roast)"
+        <div class="py-4">
+          <label class="block mb-2 text-xl font-semibold" for="packSize"
+            >Select Roast Type <span class="text-red-600">*</span></label
           >
-            <input
-              type="radio"
-              :value="roast"
-              v-model="selectedRoast"
-              class="hidden"
-              name="roast"
-            />
-            {{ roast }}
-          </label>
+          <div class="flex space-x-4">
+            <label
+              v-for="roast in roasts"
+              :class="{
+                'px-4 py-2 border rounded cursor-pointer': true,
+                'bg-[#6F4E37] text-white': selectedRoast === roast,
+                'bg-white text-gray-700': selectedRoast !== roast,
+              }"
+              @click="changeType(roast)"
+            >
+              <input
+                type="radio"
+                :value="roast"
+                v-model="selectedRoast"
+                class="hidden"
+                name="roast"
+              />
+              {{ roast }}
+            </label>
+          </div>
         </div>
 
         <div>
           <label class="block mb-2 text-xl font-semibold pt-4" for="packSize"
-            >Select Pack Size:</label
+            >Select Pack Size <span class="text-red-600">*</span></label
           >
           <select
             id="packSize"
@@ -351,14 +455,14 @@ onMounted(() => {
         >
           <button
             v-if="isInCart > 1"
-            @click="store.decresecart(product.id)"
+            @click="store.decresecart(product_detail.id)"
             class="px-2 text-white border-r font-normal flex items-center justify-center"
           >
             <Minus />
           </button>
           <button
             v-else
-            @click="removeCart(product.id)"
+            @click="removeCart(product_detail.id)"
             class="px-2 text-white border-r font-normal flex items-center justify-center"
           >
             <Minus />
@@ -366,7 +470,7 @@ onMounted(() => {
           <p class="px-2 text-white text-center">{{ isInCart }}</p>
           <!-- <input class="px-2 text-black text-center" :value="isInCart" /> -->
           <button
-            @click="store.increaseCart(product.id)"
+            @click="store.increaseCart(product_detail.id)"
             class="px-2 text-white border-l flex items-center justify-center"
           >
             <Plus />
@@ -376,7 +480,7 @@ onMounted(() => {
         <button
           v-else
           :disabled="!filteredImages"
-          @click="addToCart(product)"
+          @click="addToCart()"
           class="bg-[#6F4E37] text-white px-5 py-1.5 rounded-xl w-[300px]"
         >
           Add to Cart

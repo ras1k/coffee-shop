@@ -13,7 +13,7 @@ import invest3 from "@/assets/img/Arabica/Coffee_X_Arabica_1-29.png";
 <template>
   <div class="mx-auto rounded-lg">
     <div
-      class="h-[50svh] bg-[url('/assets/img/Arabica/arabica.png')] bg-cover"
+      class="h-[50svh] bg-[url('@/assets/img/common/arabica.png')] bg-cover"
     >
       <div
         class="w-full h-full bg-[#00000067] flex justify-center items-center text-white text-6xl font-semibold flex-col gap-2"

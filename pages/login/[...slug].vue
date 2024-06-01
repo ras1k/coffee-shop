@@ -1,7 +1,7 @@
 <script setup>
 import { storeToRefs } from 'pinia'
-import { useHeaderStore } from '~/stores/header'
-import { useAuthStore } from '../../stores/authStore';
+import { useHeaderStore } from '@/stores/header'
+import { useAuthStore } from '@/stores/authStore';
 
 // pinia
 const { routerHistory } = storeToRefs(useHeaderStore())
@@ -27,7 +27,7 @@ const config = useRuntimeConfig()
 
 const loginUser = async () => {
   loginload.value= true
-  loginForm.value.loginRole = route.params.slug[0]
+  loginForm.value.loginRole = 'Customer'
   if (loginForm.value.email !== '' && loginForm.value.password !== '') {
 
     try {
