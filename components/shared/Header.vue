@@ -1,22 +1,26 @@
 <script setup>
-const currentPage = ref("Home");
-const route = useRoute();
-const router = useRouter();
+const currentPage = ref('Home')
+const route = useRoute()
+const router = useRouter()
 const store = useProductsStore()
-const showNavbar = ref(false);
-const currentScrollPosition = ref(0);
+const authStore = useAuthStore()
+const showNavbar = ref(false)
+const currentScrollPosition = ref(0)
 
 const myFunction = () => {
-  currentScrollPosition.value = window.scrollY;
-};
+  currentScrollPosition.value = window.scrollY
+}
 
-const loginCookie = useCookie("loginCookie");
-const tokenCookie = useCookie("tokenCookie");
+const loginCookie = useCookie('loginCookie')
+const tokenCookie = useCookie('tokenCookie')
+const userCookie = useCookie('userCookie')
 const logoutUser = () => {
-  router.push(`/login/user-dashboard`);
-  loginCookie.value = "";
-  tokenCookie.value = "";
-};
+  authStore.logout()
+  loginCookie.value = ''
+  tokenCookie.value = ''
+  userCookie.value = ''
+  router.push(`/login/user-dashboard`)
+}
 // const logoutUser = () => {
 //   router.push(`/login/${loginCookie.value.loginRole}`);
 //   loginCookie.value = "";
@@ -31,7 +35,20 @@ const placeOrder = () => {
   } else {
     setRouterHistory('/checkout')
     nuxtApp.$toast('clear')
-    nuxtApp.$toast('success', {
+    nuxtApp.$toast('error', {
+      message: 'Please login first!',
+      className: 'alert_error',
+    })
+    router.push('/login/user-dashboard')
+  }
+}
+const placeSample = () => {
+  if (loginCookie.value && loginCookie.value.email) {
+    router.push('/sample')
+  } else {
+    setRouterHistory('/sample')
+    nuxtApp.$toast('clear')
+    nuxtApp.$toast('error', {
       message: 'Please login first!',
       className: 'alert_error',
     })
@@ -40,8 +57,8 @@ const placeOrder = () => {
 }
 
 onMounted(() => {
-  window.addEventListener("scroll", myFunction);
-});
+  window.addEventListener('scroll', myFunction)
+})
 </script>
 <template>
   <div
@@ -50,12 +67,12 @@ onMounted(() => {
     :class="
       (route.name != 'index' ? 'text-black' : 'text-white',
       currentScrollPosition > 0 ||
-      route.name.includes('register') ||
-      route.name.includes('dashboard')
+      route?.name?.includes('register') ||
+      route?.name?.includes('dashboard')
         ? 'bg-white'
-        : route.name.includes('login') ||
-          route.name.includes('register') ||
-          route.name.includes('dashboard')
+        : route.name?.includes('login') ||
+          route.name?.includes('register') ||
+          route.name?.includes('dashboard')
         ? 'text-black bg-white'
         : 'text-black bg-white')
     "
@@ -65,10 +82,10 @@ onMounted(() => {
     >
       <nuxt-link to="/" class="text-2xl font-bold">
         <!-- Coffee <span class="text-green-400">Exploration</span> LLC -->
-        <img src="@/assets/img/common/logo.png" alt="" class="h-32 " />
+        <img src="@/assets/img/common/logo.png" alt="" class="h-32" />
       </nuxt-link>
       <div
-        class="absolute sm:static mt-[55px] sm:mt-0 w-full sm:w-fit z-40 sm:bg-transparent flex flex-col sm:flex-row gap-5 items-center font-bold text-md justify-center duration-200 "
+        class="absolute sm:static mt-[55px] sm:mt-0 w-full sm:w-fit z-40 sm:bg-transparent flex flex-col sm:flex-row gap-5 items-center font-bold text-md justify-center duration-200"
         :class="
           showNavbar == true ? '' : 'translate-y-[-100%] sm:translate-y-0'
         "
@@ -78,51 +95,88 @@ onMounted(() => {
         <!-- <nuxt-link to="/">Product &amp; Services</nuxt-link> -->
         <div class="flex items-center gap-5">
           <div class="font-bold flex gap-1 items-center relative group">
-            <p class="hidden sm:block cursor-pointer ">Products &amp; Services</p>
+            <p class="hidden sm:block cursor-pointer">
+              Products &amp; Services
+            </p>
             <div
               class="p-2 rounded-md absolute top-[100%] right-0 hidden group-hover:flex text-black bg-white drop-shadow-md flex-col gap-2"
             >
               <!-- <NuxtLink to="/products" class="hover:bg-[#e6e1ce] px-2 py-1 rounded">Products</NuxtLink> -->
 
               <ul class="relative submenu">
-                <NuxtLink to="/products" class="hover:bg-[#e6e1ce] px-2 py-1 rounded flex justify-between">Products <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 256 512"
-              width="24"
-              height="24"
-              fill="rgb(111,78,55)"
-            >
-              <path
-                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
-              ></path>
-            </svg>  </NuxtLink>
-                
-              <ul class="w-[150px] absolute hidden p-2 right-[-120%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item">
-                <li class="shadow-2xl py-1 text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/products" class=" p-2 rounded">Retail</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/products-wholesale" class="p-2 rounded">Wholesale</nuxt-link></li>
-              </ul>
+                <NuxtLink
+                  to="/products"
+                  class="hover:bg-[#e6e1ce] px-2 py-1 rounded flex justify-between"
+                  >Products
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 256 512"
+                    width="24"
+                    height="24"
+                    fill="rgb(111,78,55)"
+                  >
+                    <path
+                      d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
+                    ></path>
+                  </svg>
+                </NuxtLink>
+
+                <ul
+                  class="w-[150px] absolute hidden p-2 right-[-120%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item"
+                >
+                  <li
+                    class="shadow-2xl py-1 text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/products" class="p-2 rounded"
+                      >Retail</nuxt-link
+                    >
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/products-wholesale" class="p-2 rounded"
+                      >Wholesale</nuxt-link
+                    >
+                  </li>
+                </ul>
               </ul>
               <ul class="relative submenu">
-                <NuxtLink to="/equipments" class="hover:bg-[#e6e1ce] px-2 py-1 rounded flex justify-between">Equipment <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 256 512"
-              width="24"
-              height="24"
-              fill="rgb(111,78,55)"
-            >
-              <path
-                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
-              ></path>
-            </svg>  </NuxtLink>
-                
-              <ul class="w-[150px] absolute hidden p-2 right-[-120%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item">
-                <li class="shadow-2xl py-1 text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/equipments" class=" p-2 rounded">Retail</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/equipments" class="p-2 rounded">Wholesale</nuxt-link></li>
+                <NuxtLink
+                  to="/equipments"
+                  class="hover:bg-[#e6e1ce] px-2 py-1 rounded flex justify-between"
+                  >Equipment
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 256 512"
+                    width="24"
+                    height="24"
+                    fill="rgb(111,78,55)"
+                  >
+                    <path
+                      d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
+                    ></path>
+                  </svg>
+                </NuxtLink>
+
+                <ul
+                  class="w-[150px] absolute hidden p-2 right-[-120%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item"
+                >
+                  <li
+                    class="shadow-2xl py-1 text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/equipments" class="p-2 rounded"
+                      >Retail</nuxt-link
+                    >
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/equipments" class="p-2 rounded"
+                      >Wholesale</nuxt-link
+                    >
+                  </li>
+                </ul>
               </ul>
-              </ul>
-
-
-
 
               <!-- <NuxtLink to="/equipments" class="hover:bg-[#e6e1ce] px-2 py-1 rounded">Equipment</NuxtLink> -->
               <!-- <NuxtLink to="/wholesale" class="hover:bg-[#e6e1ce] px-2 py-1 rounded">Wholesale</NuxtLink> -->
@@ -151,101 +205,228 @@ onMounted(() => {
         >
         <div class="flex items-center gap-5">
           <div class="font-bold flex gap-1 items-center relative group">
-            <nuxt-link to="/open-location" class="hidden sm:block  ">Open A Location</nuxt-link>
+            <nuxt-link to="/open-location" class="hidden sm:block"
+              >Open A Location</nuxt-link
+            >
             <!-- <p class="hidden sm:block">Open A Location</p> -->
             <div
               class="p-2 rounded-md w-[210px] drop-shadow-lg absolute top-[100%] left-5 hidden group-hover:flex text-black bg-white flex-col gap-1"
             >
               <ul class="relative submenu">
-                <NuxtLink to="/arabica" class="hover:bg-[#e6e1ce] p-2 rounded flex justify-between mr-5">CoffeeX Arabica <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 256 512"
-              width="24"
-              height="24"
-              fill="rgb(111,78,55)"
-            >
-              <path
-                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
-              ></path>
-            </svg>  </NuxtLink>
-                
-              <ul class="w-[150px] absolute hidden p-2 right-[-70%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item">
-                <li class="shadow-2xl py-1 text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/arabica-express" class=" p-2 rounded">Express</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/arabica-lounge" class="p-2 rounded">Lounge</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/arabica-premium" class="p-2 rounded">Premium</nuxt-link></li>
-              </ul>
-              </ul>
-              <ul class="relative submenu">
-                <NuxtLink to="/america" class="hover:bg-[#e6e1ce] p-2 rounded flex justify-between mr-5"> CoffeeX America <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 256 512"
-              width="24"
-              height="24"
-              fill="rgb(111,78,55)"
-            >
-              <path
-                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
-              ></path>
-            </svg></NuxtLink>
-              <ul class="w-[150px] absolute hidden p-2 right-[-70%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item">
-                <li class=" shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/america-express" class="p-2 rounded">Express</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/america-lounge" class="p-2 rounded">Lounge</nuxt-link></li>
-                <li class=" shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/america-premium" class="p-2 rounded">Premium</nuxt-link></li>
-              </ul>
-              </ul>
-              <ul class="relative submenu">
-                <NuxtLink to="/europa" class="hover:bg-[#e6e1ce] p-2 rounded flex justify-between mr-5"> CoffeeX Europa <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 256 512"
-              width="24"
-              height="24"
-              fill="rgb(111,78,55)"
-            >
-              <path
-                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
-              ></path>
-            </svg></NuxtLink>
-              <ul class="w-[150px] absolute hidden p-2 right-[-70%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item">
-                <li class=" shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/europa-express" class=" p-2 rounded">Express</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/europa-lounge" class=" p-2 rounded">Lounge</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/europa-premium" class="p-2 rounded">Premium</nuxt-link></li>
-              </ul>
+                <NuxtLink
+                  to="/arabica"
+                  class="hover:bg-[#e6e1ce] p-2 rounded flex justify-between mr-5"
+                  >CoffeeX Arabica
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 256 512"
+                    width="24"
+                    height="24"
+                    fill="rgb(111,78,55)"
+                  >
+                    <path
+                      d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
+                    ></path>
+                  </svg>
+                </NuxtLink>
+
+                <ul
+                  class="w-[150px] absolute hidden p-2 right-[-70%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item"
+                >
+                  <li
+                    class="shadow-2xl py-1 text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/arabica-express" class="p-2 rounded"
+                      >Express</nuxt-link
+                    >
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/arabica-lounge" class="p-2 rounded"
+                      >Lounge</nuxt-link
+                    >
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/arabica-premium" class="p-2 rounded"
+                      >Premium</nuxt-link
+                    >
+                  </li>
+                </ul>
               </ul>
               <ul class="relative submenu">
-                <NuxtLink to="/asia" class="hover:bg-[#e6e1ce] p-2 rounded flex justify-between mr-5"> CoffeeX Asia <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 256 512"
-              width="24"
-              height="24"
-              fill="rgb(111,78,55)"
-            >
-              <path
-                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
-              ></path>
-            </svg></NuxtLink>
-              <ul class="w-[150px] absolute hidden p-2 right-[-70%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item">
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/asia-express" class="p-2 rounded">Express</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/asia-lounge" class=" p-2 rounded">Lounge</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/asia-premium" class="p-2 rounded">Premium</nuxt-link></li>
-              </ul>
+                <NuxtLink
+                  to="/america"
+                  class="hover:bg-[#e6e1ce] p-2 rounded flex justify-between mr-5"
+                >
+                  CoffeeX America
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 256 512"
+                    width="24"
+                    height="24"
+                    fill="rgb(111,78,55)"
+                  >
+                    <path
+                      d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
+                    ></path></svg
+                ></NuxtLink>
+                <ul
+                  class="w-[150px] absolute hidden p-2 right-[-70%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item"
+                >
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/america-express" class="p-2 rounded"
+                      >Express</nuxt-link
+                    >
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/america-lounge" class="p-2 rounded"
+                      >Lounge</nuxt-link
+                    >
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/america-premium" class="p-2 rounded"
+                      >Premium</nuxt-link
+                    >
+                  </li>
+                </ul>
               </ul>
               <ul class="relative submenu">
-                <NuxtLink to="/africa" class="hover:bg-[#e6e1ce] p-2 rounded flex justify-between mr-5"> CoffeeX Africa <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 256 512"
-              width="24"
-              height="24"
-              fill="rgb(111,78,55)"
-            >
-              <path
-                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
-              ></path>
-            </svg></NuxtLink>
-              <ul class="w-[150px] absolute hidden p-2 right-[-70%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item">
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/africa-express" class=" p-2 rounded">Express</nuxt-link></li>
-                <li class=" shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/africa-lounge" class="p-2 rounded">Lounge</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"><nuxt-link to="/africa-premium" class="p-2 rounded">Premium</nuxt-link></li>
+                <NuxtLink
+                  to="/europa"
+                  class="hover:bg-[#e6e1ce] p-2 rounded flex justify-between mr-5"
+                >
+                  CoffeeX Europa
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 256 512"
+                    width="24"
+                    height="24"
+                    fill="rgb(111,78,55)"
+                  >
+                    <path
+                      d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
+                    ></path></svg
+                ></NuxtLink>
+                <ul
+                  class="w-[150px] absolute hidden p-2 right-[-70%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item"
+                >
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/europa-express" class="p-2 rounded"
+                      >Express</nuxt-link
+                    >
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/europa-lounge" class="p-2 rounded"
+                      >Lounge</nuxt-link
+                    >
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/europa-premium" class="p-2 rounded"
+                      >Premium</nuxt-link
+                    >
+                  </li>
+                </ul>
               </ul>
+              <ul class="relative submenu">
+                <NuxtLink
+                  to="/asia"
+                  class="hover:bg-[#e6e1ce] p-2 rounded flex justify-between mr-5"
+                >
+                  CoffeeX Asia
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 256 512"
+                    width="24"
+                    height="24"
+                    fill="rgb(111,78,55)"
+                  >
+                    <path
+                      d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
+                    ></path></svg
+                ></NuxtLink>
+                <ul
+                  class="w-[150px] absolute hidden p-2 right-[-70%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item"
+                >
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/asia-express" class="p-2 rounded"
+                      >Express</nuxt-link
+                    >
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/asia-lounge" class="p-2 rounded"
+                      >Lounge</nuxt-link
+                    >
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/asia-premium" class="p-2 rounded"
+                      >Premium</nuxt-link
+                    >
+                  </li>
+                </ul>
+              </ul>
+              <ul class="relative submenu">
+                <NuxtLink
+                  to="/africa"
+                  class="hover:bg-[#e6e1ce] p-2 rounded flex justify-between mr-5"
+                >
+                  CoffeeX Africa
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 256 512"
+                    width="24"
+                    height="24"
+                    fill="rgb(111,78,55)"
+                  >
+                    <path
+                      d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
+                    ></path></svg
+                ></NuxtLink>
+                <ul
+                  class="w-[150px] absolute hidden p-2 right-[-70%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item"
+                >
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/africa-express" class="p-2 rounded"
+                      >Express</nuxt-link
+                    >
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/africa-lounge" class="p-2 rounded"
+                      >Lounge</nuxt-link
+                    >
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] rounded"
+                  >
+                    <nuxt-link to="/africa-premium" class="p-2 rounded"
+                      >Premium</nuxt-link
+                    >
+                  </li>
+                </ul>
               </ul>
               <!-- <NuxtLink to="/catering-prices">Catering Prices</NuxtLink>
               <NuxtLink to="/coffee-school">Coffee School</NuxtLink> -->
@@ -276,36 +457,73 @@ onMounted(() => {
         <nuxt-link v-if="!loginCookie" to="/supply-chain" class=" "
           >Supply Chain</nuxt-link
         >
+        <!-- <nuxt-link to="/sample" class=" ">Apply for Sample</nuxt-link> -->
+        <nuxt-link to="/sample" class="cursor-pointer"
+          >Apply For Sample</nuxt-link
+        >
         <div class="flex items-center gap-5">
           <div class="font-bold flex gap-1 items-center relative group">
-            <nuxt-link class="hidden sm:block cursor-pointer lg: ">Customer Portal</nuxt-link>
+            <nuxt-link class="hidden sm:block cursor-pointer lg:"
+              >Customer Portal</nuxt-link
+            >
             <!-- <p class="hidden sm:block">Open A Location</p> -->
             <div
               class="p-2 rounded-md w-[200px] drop-shadow-lg absolute top-[100%] left-10 hidden group-hover:flex text-black bg-white flex-col gap-1"
             >
-            <nuxt-link v-if="!loginCookie" to="/login/user-dashboard" class="hover:bg-[#e6e1ce] p-2 rounded"
-          >Customer Login</nuxt-link
-        >
-        <NuxtLink v-else to="/dashboard" class="lg:  hover:bg-[#e6e1ce] p-2 rounded">Dashboard</NuxtLink>
+              <nuxt-link
+                v-if="!loginCookie"
+                to="/login/user-dashboard"
+                class="hover:bg-[#e6e1ce] p-2 rounded"
+                >Customer Login</nuxt-link
+              >
+              <NuxtLink
+                v-else
+                to="/dashboard"
+                class="lg: hover:bg-[#e6e1ce] p-2 rounded"
+                >Dashboard</NuxtLink
+              >
+              <NuxtLink
+                to="/wishlist"
+                class="lg: hover:bg-[#e6e1ce] p-2 rounded"
+                >Wishlist</NuxtLink
+              >
               <ul class="relative submenu">
-                <h1 class="cursor-pointer hover:bg-[#e6e1ce] p-2 rounded flex gap-2">Rewards Center <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 256 512"
-              width="24"
-              height="24"
-              fill="rgb(111,78,55)"
-            >
-              <path
-                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
-              ></path>
-            </svg></h1>
-              <ul class="w-[125px] absolute hidden p-2 right-[100%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item">
-                <li class="shadow-2xl py-1 text-lg hover:bg-[#e6e1ce] p-2 rounded"><nuxt-link to="/rewards">Rewards</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] p-2 rounded"><nuxt-link to="/reviews">Reviews</nuxt-link></li>
-                <li class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] p-2 rounded"><nuxt-link to="/gift-card">Gift Cards</nuxt-link></li>
+                <h1
+                  class="cursor-pointer hover:bg-[#e6e1ce] p-2 rounded flex gap-2"
+                >
+                  Rewards Center
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 256 512"
+                    width="24"
+                    height="24"
+                    fill="rgb(111,78,55)"
+                  >
+                    <path
+                      d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
+                    ></path>
+                  </svg>
+                </h1>
+                <ul
+                  class="w-[125px] absolute hidden p-2 right-[100%] bg-white drop-shadow-lg top-0 rounded-lg submenu-item"
+                >
+                  <li
+                    class="shadow-2xl py-1 text-lg hover:bg-[#e6e1ce] p-2 rounded"
+                  >
+                    <nuxt-link to="/rewards">Rewards</nuxt-link>
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] p-2 rounded"
+                  >
+                    <nuxt-link to="/reviews">Reviews</nuxt-link>
+                  </li>
+                  <li
+                    class="shadow-2xl py-1 border-black text-lg hover:bg-[#e6e1ce] p-2 rounded"
+                  >
+                    <nuxt-link to="/gift-card">Gift Cards</nuxt-link>
+                  </li>
+                </ul>
               </ul>
-              </ul>
-
             </div>
           </div>
         </div>
@@ -330,18 +548,34 @@ onMounted(() => {
             <div
               class="p-2 rounded-md absolute top-[100%] right-0 hidden group-hover:flex text-black bg-white drop-shadow-md flex-col gap-1"
             >
-              <NuxtLink to="/login/hr-management" class="hover:bg-[#e6e1ce] p-2 rounded">Hr Management</NuxtLink>
-              <NuxtLink to="/login/inventory-management" class="hover:bg-[#e6e1ce] p-2 rounded"
+              <NuxtLink
+                to="/login/hr-management"
+                class="hover:bg-[#e6e1ce] p-2 rounded"
+                >Hr Management</NuxtLink
+              >
+              <NuxtLink
+                to="/login/inventory-management"
+                class="hover:bg-[#e6e1ce] p-2 rounded"
                 >Inventory System</NuxtLink
               >
-              <NuxtLink to="/login/supply-chain" class="hover:bg-[#e6e1ce] p-2 rounded">Supply Chain System</NuxtLink>
-              <NuxtLink to="/login/accounting-management" class="hover:bg-[#e6e1ce] p-2 rounded"
+              <NuxtLink
+                to="/login/supply-chain"
+                class="hover:bg-[#e6e1ce] p-2 rounded"
+                >Supply Chain System</NuxtLink
+              >
+              <NuxtLink
+                to="/login/accounting-management"
+                class="hover:bg-[#e6e1ce] p-2 rounded"
                 >Accounting Management</NuxtLink
               >
-              <NuxtLink to="/login/customer-management" class="hover:bg-[#e6e1ce] p-2 rounded"
+              <NuxtLink
+                to="/login/customer-management"
+                class="hover:bg-[#e6e1ce] p-2 rounded"
                 >Customer Management</NuxtLink
               >
-              <NuxtLink to="/login/marketing-management" class="hover:bg-[#e6e1ce] p-2 rounded"
+              <NuxtLink
+                to="/login/marketing-management"
+                class="hover:bg-[#e6e1ce] p-2 rounded"
                 >Media,Communication,Marketing Management System</NuxtLink
               >
             </div>
@@ -350,7 +584,7 @@ onMounted(() => {
           <div v-else class="cursor-pointer">
             <p @click="logoutUser()">Log Out</p>
           </div>
-          
+
           <!-- <div class="font-bold flex gap-1 items-center relative group">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -386,19 +620,38 @@ onMounted(() => {
           </div>
         </div>
 
-        <div @click="placeOrder()" class="flex items-center  p-1 rounded-lg cursor-pointer font-bold gap-5">
-          <div
-          
-            class="relative"
-          >
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-            
-             <div v-if="store.cart.length" class="absolute top-5 left-5 text-center flex items-center justify-center text-white p-1 bg-amber-900  rounded-full text-sm h-5 w-5">
-               {{ store.cart.length }}
+        <div
+          @click="placeOrder()"
+          class="flex items-center p-1 rounded-lg cursor-pointer font-bold gap-5"
+        >
+          <div class="relative">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-shopping-cart"
+            >
+              <circle cx="8" cy="21" r="1" />
+              <circle cx="19" cy="21" r="1" />
+              <path
+                d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
+              />
+            </svg>
+
+            <div
+              v-if="store.cart.length"
+              class="absolute top-5 left-5 text-center flex items-center justify-center text-white p-1 bg-amber-900 rounded-full text-sm h-5 w-5"
+            >
+              {{ store.cart.length }}
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -408,7 +661,8 @@ onMounted(() => {
 .router-link-exact-active {
   color: #f19822;
 }
-.submenu:hover .submenu-item{
+.submenu:hover .submenu-item {
   display: block;
 }
 </style>
+z

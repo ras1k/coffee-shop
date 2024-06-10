@@ -44,7 +44,7 @@ const modules = [Autoplay]
 const breakpoints = ref({
   320: {
     slidesPerView: 1,
-    spaceBetween: 10,
+    spaceBetween: 1200,
   },
   639: {
     slidesPerView: 1,
@@ -251,6 +251,24 @@ const africa = ref([
     image: img27,
   },
 ])
+
+
+const screenWidth = ref(0);
+
+const updateScreenWidth = () => {
+  if (typeof window !== 'undefined') {
+    screenWidth.value = window.innerWidth;
+  }
+};
+
+onMounted(() => {
+  updateScreenWidth();
+  window.addEventListener('resize', updateScreenWidth);
+});
+
+const flexDirectionClass = computed(() => {
+  return screenWidth.value <= 320 ? 'flex-col' : 'flex-row';
+});
 </script>
 <template>
   <div class="py-10">
@@ -287,7 +305,7 @@ const africa = ref([
               <hr class="border-b-1 mt-4 mx-auto mb-6 border-black">
             </h1>
           </div>
-          <div class="flex gap-5 w-full justify-between">
+          <div :class="['flex gap-5 w-full justify-between', flexDirectionClass]">
             <div v-for="item in arabica">
               <div class="rounded-xl bg-white drop-shadow-md">
                 <div class="h-[200px] overflow-hidden rounded-t-xl w-[250px]">

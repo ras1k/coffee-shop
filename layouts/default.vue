@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import "swiper/css";
-import "swiper/css/navigation";
+import 'swiper/css'
+import 'swiper/css/navigation'
 
-import { storeToRefs } from "pinia";
-import { useHeaderStore } from "../stores/header";
+import { storeToRefs } from 'pinia'
+import { useHeaderStore } from '../stores/header'
 
-const nuxtApp = useNuxtApp();
+const nuxtApp = useNuxtApp()
 
-const route = useRoute();
+const route = useRoute()
 
 // pinia
-const { isShowLoading } = storeToRefs(useHeaderStore());
-import { useMarketingDashboardStore } from "../stores/dashboard/marketingDashboard";
+const { isShowLoading } = storeToRefs(useHeaderStore())
+import { useMarketingDashboardStore } from '../stores/dashboard/marketingDashboard'
 
 // pinia
 const { marketingOffer, marketingPromo } = storeToRefs(
   useMarketingDashboardStore()
-);
+)
 
 // const route = useRoute();
 // const config = useRuntimeConfig();
@@ -51,7 +51,7 @@ const { marketingOffer, marketingPromo } = storeToRefs(
     <div class="min-h-screen mt-20">
       <slot />
       <div
-        v-if="route.name.includes('shops') || route.name.includes('carts')"
+        v-if="route.name?.includes('shops') || route.name?.includes('carts')"
         class="bg-white tilt-shaking text-black w-fit rounded boxShadow p-2 fixed z-30 bottom-10 left-10"
       >
         <table>

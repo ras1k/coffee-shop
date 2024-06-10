@@ -17,7 +17,7 @@ const createOrder = async () => {
     body:store.orderdata,
   });
   if (data) {
-    store.cart = ''
+    store.cart = []
     nuxtApp.$toast("clear");
     nuxtApp.$toast("success", {
       message: "Order Placed Successfully",

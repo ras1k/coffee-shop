@@ -38,6 +38,8 @@ onMounted(() => {
               : route?.params?.slug[0]
             : route.name.includes("about")
             ? "About Us"
+            : route.name.includes("sample")
+            ? "Apply For a Free Sample"
             : route.name.includes("MenuPage")
             ? "Menu Page"
             : route.name.includes("open-location")

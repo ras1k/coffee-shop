@@ -23,7 +23,7 @@ const placeOrder = () => {
   } else {
     setRouterHistory('/checkout')
     nuxtApp.$toast('clear')
-    nuxtApp.$toast('success', {
+    nuxtApp.$toast('error', {
       message: 'Please login first!',
       className: 'alert_error',
     })
@@ -78,7 +78,7 @@ const currentSelectedMenuItem = ref('')
 const total = computed(() => {
   let t = 0
   if(store.cart)
-  store?.cart?.map((e) => (t += e.price * e.quantity))
+  store?.cart?.map((e) => (t += e.product_price * e.product_qty))
   return t
 })
 
@@ -100,6 +100,8 @@ onMounted(() => {
 
 
 <template>
+  <ClientOnly >
+
   <div class="mx-auto">
     <div class="h-[40svh] bg-[url('/assets/img/home/hero/coffee2.jpg')] bg-cover">
       <div class="w-full h-full bg-[#00000067] flex justify-center items-center text-white text-6xl font-semibold">
@@ -107,7 +109,7 @@ onMounted(() => {
       </div>
     </div>
     <!-- {{ menu }} -->
-    <ClientOnly>
+   
     <div class="px-[10%] flex flex-col-reverse md:flex-row gap-5 pb-5">
       <div class="md:w-3/4">
         <div class="rounded-b-lg sticky top-[80px] mb-3 z-10 px-1 py-5 backdrop-blur-3xl">
@@ -225,9 +227,9 @@ onMounted(() => {
               :key="item.id"
               class="py-2 flex justify-between gap-2 text-sm font-semibold border-b"
             >
-              <p>{{ item.quantity }} x {{ item.title }}</p>
+              <p>{{ item.product_qty }} x {{ item.product_title }}</p>
               <div class="flex flex-col gap-1">
-                <p>$ {{ item.price * item.quantity }}</p>
+                <p>$ {{ item.product_price * item.product_qty }}</p>
                 <div class="flex border p-1 rounded-md bg-white drop-shadow-md">
                   <div class="border-r" @click="store.increaseCart(item.id)">
                     <svg
@@ -309,8 +311,9 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    </ClientOnly>
   </div>
+      
+  </ClientOnly>
 </template>
 
 

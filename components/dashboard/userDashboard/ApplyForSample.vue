@@ -2,10 +2,12 @@
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "~/stores/authStore";
 import { useHeaderStore } from "~/stores/header";
+import {useProductsStore } from "/stores/products"
 const nuxtApp = useNuxtApp();
 const route = useRoute();
 const router = useRouter();
 const store = useAuthStore();
+const productStotre = useProductsStore();
 const loginCookie = useCookie("loginCookie");
 const tokenCookie = useCookie("tokenCookie");
 const userCookie = useCookie("userCookie");
@@ -36,56 +38,58 @@ const business_type = ref();
 const config = useRuntimeConfig();
 const handleRegister = async () => {
   loginload.value = true;
+  productStotre.applyForSample.value = registerForm.value
   try {
     const response = await useApi("/apply-for-sample", {
       method: "POST",
-      body: registerForm.value
+      body: registerForm.value,
+
     });
     if (response.token) {
       console.log(response.message);
-      // response.data.loginRole = registerForm.value.role;
+      response.data.loginRole = registerForm.value.role;
 
-      // store.user = response.data;
-      // tokenCookie.value = response.token;
-      // userCookie.value = response.data;
+      store.user = response.data;
+      tokenCookie.value = response.token;
+      userCookie.value = response.data;
 
-      // userCookie.value.role = registerForm.role;
+      userCookie.value.role = registerForm.role;
       // console.log(response.data);
-      // loginCookie.value = response.data;
+      loginCookie.value = response.data;
 
       nuxtApp.$toast("clear");
       nuxtApp.$toast("success", {
         message: response.message,
         className: "alert_error",
       });
-      // if (routerHistory.value !== "") {
-      //   router.push(routerHistory.value);
-      //   setRouterHistory("");
-      // } else {
-      //   router.push("/dashboard");
-      //   console.log(userCookie.value);
-      // }
+      if (routerHistory.value !== "") {
+        router.push(routerHistory.value);
+        setRouterHistory("");
+      } else {
+        router.push("/dashboard");
+        console.log(userCookie.value);
+      }
     }
-    registerForm.value = ({
-  name: "",
-  email: "",
-  phone_no: "",
-  type: "",
-  industry: "",
-  sub_industry: "",
-  address: "",
-  country: "",
-  reason: "",
-  company_name: "",
-  no_of_employee: "",
-  no_of_daily_customer: "",
-  no_of_monthly_customer: "",
-});
-nuxtApp.$toast("clear");
-      nuxtApp.$toast("success", {
-        message: response.message,
-        className: "alert_error",
-      });
+    registerForm.value = {
+      name: "",
+      email: "",
+      phone_no: "",
+      type: "",
+      industry: "",
+      sub_industry: "",
+      address: "",
+      country: "",
+      reason: "",
+      company_name: "",
+      no_of_employee: "",
+      no_of_daily_customer: "",
+      no_of_monthly_customer: "",
+    };
+    nuxtApp.$toast("clear");
+    nuxtApp.$toast("success", {
+      message: response.message,
+      className: "alert_error",
+    });
     loginload.value = false;
   } catch (error) {
     if (
@@ -157,47 +161,48 @@ const businessType = ref([
   },
 ]);
 
-// const loginUser = async () => {
-//   if (registerForm.value.email !== "" && registerForm.value.password !== "") {
-//     try {
-//       const response = await $fetch(config.public.apiUrl + "/registration", {
-//         method: "POST",
-//         body: registerForm.value,
-//       });
+const loginUser = async () => {
+  if (registerForm.value.email !== "" && registerForm.value.password !== "") {
+    try {
+      const response = await $fetch(config.public.apiUrl + "/registration", {
+        method: "POST",
+        body: registerForm.value,
+      });
 
-//       if (response.message === "User Created!") {
-//         store.user = response.user;
-//         tokenCookie.value = response.token;
-//         nuxtApp.$toast("clear");
-//         nuxtApp.$toast("success", {
-//           message: response.message,
-//           className: "alert_error",
-//         });
-//         if (routerHistory.value !== "") {
-//           router.push(routerHistory.value);
-//           setRouterHistory("");
-//         } else {
-//           router.push("/dashboard");
-//         }
-//       }
-//     } catch (error) {
-//       if (error.status === 400 && error.data.message) {
-//         nuxtApp.$toast("clear");
-//         nuxtApp.$toast("error", {
-//           message: error.data.message,
-//           className: "alert_error",
-//         });
-//       }
-//     }
-//   }
-// };
+      if (response.message === "User Created!") {
+        store.user = response.user;
+        tokenCookie.value = response.token;
+        nuxtApp.$toast("clear");
+        nuxtApp.$toast("success", {
+          message: response.message,
+          className: "alert_error",
+        });
+        if (routerHistory.value !== "") {
+          router.push(routerHistory.value);
+          setRouterHistory("");
+        } else {
+          router.push("/dashboard");
+        }
+      }
+    } catch (error) {
+      if (error.status === 400 && error.data.message) {
+        nuxtApp.$toast("clear");
+        nuxtApp.$toast("error", {
+          message: error.data.message,
+          className: "alert_error",
+        });
+      }
+    }
+  }
+};
 </script>
 <template>
   <div class="container mx-auto">
     <div class="py-8">
       <div>
+        
         <h2 class="text-2xl font-semibold leading-tight pb-2">
-          Apply For Sample
+          Apply For Sampledsfsdfsdf
         </h2>
       </div>
       <hr class="border my-4 border-orange-400" />
@@ -460,8 +465,10 @@ const businessType = ref([
               >
             </div> -->
           </div>
+
         </form>
       </div>
+
     </div>
   </div>
 </template>

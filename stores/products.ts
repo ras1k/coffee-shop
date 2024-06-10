@@ -7,6 +7,22 @@ export const useProductsStore = defineStore({
     product: [],
     allProduct: [],
     menu: [],
+    wishlist: [],
+    applyForSample: {
+      name: '',
+      email: '',
+      phone_no: '',
+      type: '',
+      industry: '',
+      sub_industry: '',
+      address: '',
+      country: '',
+      reason: '',
+      company_name: '',
+      no_of_employee: '',
+      no_of_daily_customer: '',
+      no_of_monthly_customer: ''
+    },
     orderdata: null,
   }),
   actions: {
@@ -32,6 +48,23 @@ export const useProductsStore = defineStore({
 
     removeFromCart(id) {
       this.cart = this.cart.filter((item) => item.product_id !== id)
+    },
+    clearApplyForSample() {
+      this.applyForSample = {
+        name: '',
+        email: '',
+        phone_no: '',
+        type: '',
+        industry: '',
+        sub_industry: '',
+        address: '',
+        country: '',
+        reason: '',
+        company_name: '',
+        no_of_employee: '',
+        no_of_daily_customer: '',
+        no_of_monthly_customer: ''
+      };
     },
   },
   persist: {

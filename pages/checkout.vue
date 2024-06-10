@@ -17,7 +17,7 @@ const formData = ref({
   user_id: authStore.user?.id,
   name: authStore.user?.name,
   email: authStore.user?.email,
-  address1: '',
+  address1: authStore.user?.address,
   address2: '',
   payment: '',
   card_fname: '',
@@ -75,7 +75,14 @@ const checkout = async () => {
   }
 }
 
-onMounted(async () => {})
+const sameAsBilling = ref(false)
+
+onMounted(() => {
+  if (!authStore.user) {
+    router.push('/login')
+  }
+})
+
 </script>
 
 <template>
@@ -86,6 +93,7 @@ onMounted(async () => {})
     <h2 class="text-4xl font-semibold mb-6 text-center text-gray-800">
       Checkout
     </h2>
+
     <div class="bg-white shadow-lg rounded-lg p-8 w-full flex gap-10">
       <div class="w-1/4">
         <div class="py-5">
@@ -99,12 +107,12 @@ onMounted(async () => {})
           </div>
 
           <div class="bg-white rounded-xl drop-shadow-lg p-3 mb-3">
-            <h1 class="text-xl font-semibold pb-2 border-b">Your Order</h1>
+            <h1 class="text-xl font-semibold pb-2 border-b">My Order</h1>
             <div
               v-for="item in store.cart"
               class="py-2 flex justify-between gap-2 text-sm font-semibold border-b"
-            >
-              <p>{{ item.product_qty }} x {{ item.product_title }}</p>
+            > 
+              <p> {{ item.product_qty }} x {{ item.product_title }}</p>
               <div class="flex flex-col gap-1">
                 <p>$ {{ item.product_price * item.product_qty }}</p>
                 <div class="flex border p-1 rounded-md bg-white drop-shadow-md">
@@ -198,24 +206,36 @@ onMounted(async () => {})
         <div class="mb-6">
           <label
             for="address"
-            class="block text-sm font-semibold text-gray-800 mb-2"
-            >Shipping Address 1</label
+            class="block text-lg font-semibold text-gray-800 mb-2"
+            >Shipping Address</label
           >
+          <div class="flex gap-2 items-center mb-4">
+            <div class="w-1/2">
+              <label for="text" class="mb-2 ">State</label>
+              <input type="text" class="w-1/2 input-field" placeholder="State">
+            </div>
+            <div class="w-1/2">
+              <label for="text">Zip Code</label>
+              <input type="text" class="w-1/2 input-field" placeholder="State">
+            </div>
+          </div>
+          <label
+          for="address"
+          class="block text-sm font-semibold text-gray-800 mb-2"
+          >Address Line 1</label
+        >
           <textarea
             id="address"
-            v-model="formData.address1"
-            required
+            v-model="formData.address2"
             class="input-field"
             rows="4"
             placeholder="123 Main St, City, Country"
           ></textarea>
-        </div>
-        <div class="mb-6">
           <label
-            for="address"
-            class="block text-sm font-semibold text-gray-800 mb-2"
-            >Shipping Address 2</label
-          >
+          for="address"
+          class="block text-sm font-semibold text-gray-800 mb-2"
+          >Address Line 2</label
+        >
           <textarea
             id="address"
             v-model="formData.address2"
@@ -224,6 +244,57 @@ onMounted(async () => {})
             placeholder="123 Main St, City, Country"
           ></textarea>
         </div>
+        <div class="mb-6">
+          <label
+            for="address"
+            class="block text-lg font-semibold text-gray-800 mb-2"
+            >Billing Address</label
+          >
+          <div class="flex gap-2 items-center mb-4">
+            <div class="w-1/2">
+              <label for="text" class="mb-2 ">State</label>
+              <input type="text" class="w-1/2 input-field" placeholder="State">
+            </div>
+            <div class="w-1/2">
+              <label for="text">Zip Code</label>
+              <input type="text" class="w-1/2 input-field" placeholder="State">
+            </div>
+          </div>
+          <label
+          for="address"
+          class="block text-sm font-semibold text-gray-800 mb-2"
+          >Address Line 1</label
+        >
+          <textarea
+            id="address"
+            v-model="formData.address2"
+            class="input-field"
+            rows="4"
+            placeholder="123 Main St, City, Country"
+          ></textarea>
+          <label
+          for="address"
+          class="block text-sm font-semibold text-gray-800 mb-2"
+          >Address Line 2</label
+        >
+          <textarea
+            id="address"
+            v-model="formData.address2"
+            class="input-field"
+            rows="4"
+            placeholder="123 Main St, City, Country"
+          ></textarea>
+        </div>
+        <!-- <div class="flex gap-2 items-center mb-4">
+          <div class="w-1/2">
+            <label for="text" class="mb-2">State</label>
+            <input type="text" class="w-1/2 input-field" placeholder="State">
+          </div>
+          <div class="w-1/2">
+            <label for="text">Zip Code</label>
+            <input type="text" class="w-1/2 input-field" placeholder="State">
+          </div>
+        </div> -->
 
         <div class="flex justify-center">
           <button
