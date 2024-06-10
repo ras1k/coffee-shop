@@ -19,15 +19,12 @@ const getProducts = async () => {
 
   console.log(data, "from dashboard");
 
-
   store.order = data;
 };
 
 // const sorted_list = computed(() => {
 //   return [...store.order].sort((a,b) => b.value - a.value)
 // })
-
-
 
 onMounted(() => {
   getProducts();
@@ -118,7 +115,7 @@ onMounted(() => {
                 <th
                   class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
                 >
-                  Order Id
+                  Wish Id
                 </th>
                 <!-- <th
                   class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
@@ -229,8 +226,10 @@ onMounted(() => {
                       <DialogTrigger>Details </DialogTrigger>
                       <DialogContent class="bg-white">
                         <DialogHeader>
-                          <DialogTitle class="py-2">Product Details</DialogTitle>
-                          <DialogDescription >
+                          <DialogTitle class="py-2"
+                            >Product Details</DialogTitle
+                          >
+                          <DialogDescription>
                             <table class="min-w-full leading-normal">
                               <thead>
                                 <tr>
@@ -258,7 +257,7 @@ onMounted(() => {
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr  v-for="i in singleOrder.item">
+                                <tr v-for="i in singleOrder.item">
                                   <td
                                     class="px-5 py-5 border-b border-gray-200 bg-white text-sm"
                                   >
@@ -294,7 +293,6 @@ onMounted(() => {
                             <!-- {{ i.product_title }} -->
                           </DialogDescription>
                         </DialogHeader>
-
                       </DialogContent>
                     </Dialog>
                   </p>
